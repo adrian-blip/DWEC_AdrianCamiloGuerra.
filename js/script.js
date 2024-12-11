@@ -175,7 +175,14 @@ class Estudiante extends Persona {
         return this.#asignaturas;
     }
 
-   
+   toString(){
+    return `Estudiante: 
+        ID: ${this.#id}
+        Nombre: ${this.nombre}
+        Edad: ${this.edad}
+        Dirección: ${this.#direccion}
+        Asignaturas: ${this.#asignaturas}`;
+   }
 
     // Métodos
     matricular(...asignaturas) {
@@ -289,9 +296,9 @@ class listaEstudiante {
         // Buscar estudiantes que coincidan con el patrón
         let busqueda = this.estudiantes.filter(e => e.nombre.toLowerCase().includes(patron.toLowerCase()));
         if (busqueda.length > 0) {
-            console.log("Estudiantes que coinciden con el patron" + patron)
-            busqueda.forEach(asignatura => {
-                console.log(asignatura);
+            console.log("Estudiantes que coinciden con el patron " + patron)
+            busqueda.forEach(e => {
+                console.log(e.toString());
             })
         } else {
             console.log("Busqueda fallida");
@@ -398,7 +405,7 @@ function mostrarMenu() {
             desmatricularEstudiante();
             break;
         case '5':
-            agregarCalificacion();
+            agregarCalificaciones();
             break;
         case '6':
             verPromedioEstudiante();
@@ -473,14 +480,16 @@ function matricularEstudiante() {
     let estudiante = listaEstudiantes.estudiantes.find(e => e.id == idEstudiante);
     
     if (estudiante) {
-        let nombreAsignatura = prompt("Ingresa el nombre de la asignatura:");
-        let asignatura = asignaturas.listaDeAsignaturas.find(a => a.nombre === nombreAsignatura);
-        
-        if (asignatura) {
-            estudiante.matricular(asignatura);
-        } else {
-            console.log("Asignatura no encontrada.");
-        }
+        let nombreAsignatura = prompt("Ingresa el nombre de la asignaturas:").split(",");
+        nombreAsignatura.forEach(nAsig => {
+            let asignatura = asignaturas.listaDeAsignaturas.find(a => a.nombre === nAsig);
+            if (asignatura) {
+                estudiante.matricular(asignatura);
+            } else {
+                console.log("Asignatura no encontrada.");
+            }
+        });    
+       
     } else {
         console.log("Estudiante no encontrado.");
     }
@@ -493,14 +502,16 @@ function desmatricularEstudiante() {
     let estudiante = listaEstudiantes.estudiantes.find(e => e.id == idEstudiante);
     
     if (estudiante) {
-        let nombreAsignatura = prompt("Ingresa el nombre de la asignatura:");
-        let asignatura = estudiante.asignaturas.find(a => a.nombre === nombreAsignatura);
+        let nombreAsignatura = prompt("Ingresa el nombre de la asignatura:").split(',');
+        nombreAsignatura.forEach(nAsig=>{
+            let asignatura = estudiante.asignaturas.find(a => a.nombre === nAsig);
+            if (asignatura) {
+                estudiante.desmatricular(asignatura);
+            } else {
+                console.log("El estudiante no está matriculado en esta asignatura.");
+            }
+        })    
         
-        if (asignatura) {
-            estudiante.desmatricular(asignatura);
-        } else {
-            console.log("El estudiante no está matriculado en esta asignatura.");
-        }
     } else {
         console.log("Estudiante no encontrado.");
     }
@@ -508,7 +519,7 @@ function desmatricularEstudiante() {
 }
 
 // Agregar calificación a una asignatura
-function agregarCalificacion() {
+function agregarCalificaciones() {
     let idEstudiante = prompt("Ingresa el ID del estudiante:");
     let estudiante = listaEstudiantes.estudiantes.find(e => e.id == idEstudiante);
     
@@ -556,6 +567,7 @@ function buscarAsignaturas() {
 }
 
 
+
 // Buscar estudiantes por nombre
 function buscarEstudiantes() {
     let patron = prompt("Ingresa el patrón para buscar estudiantes:");
@@ -575,10 +587,7 @@ function listaDeAsignaturasPorestudiante(){
     mostrarMenu();
 }
 
-function listaDeAsignaturasPorestudiante(){
-    listaEstudiantes.listaDeAsignaturasXestudiante();
-    mostrarMenu();
-}
+
 
 function calificacionesYpromedioAsignatura(){
     listaEstudiantes.calificacionesYpromedioAsig();

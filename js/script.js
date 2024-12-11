@@ -43,7 +43,7 @@ class Asignatura {
             this.#calificaciones.forEach(calificacion => {
                 sumaCali += calificacion;
             });
-            return cantidadCali / sumaCali;
+            return  sumaCali / cantidadCali;
         } else {
             console.log("No hay calificaciones")
         }
@@ -70,7 +70,7 @@ class Asignaturas {
     // Método para quitar una asignatura usando filter
     quitarAsignatura(asignatura) {
         // Usamos filter para crear una nueva lista sin la asignatura a eliminar
-        let nuevaLista = this.listaDeAsignaturas.filter(a => a !== asignatura);
+        let nuevaLista = this.listaDeAsignaturas.filter(a => a.nombre !== asignatura.nombre);
 
         // Si la nueva lista tiene la misma longitud, significa que no se eliminó nada
         if (nuevaLista.length !== this.listaDeAsignaturas.length) {
@@ -175,14 +175,21 @@ class Estudiante extends Persona {
         return this.#asignaturas;
     }
 
-   toString(){
-    return `Estudiante: 
-        ID: ${this.#id}
-        Nombre: ${this.nombre}
-        Edad: ${this.edad}
-        Dirección: ${this.#direccion}
-        Asignaturas: ${this.#asignaturas}`;
-   }
+    toString() {
+        let asig = "";
+         this.#asignaturas.forEach(asignatura =>{
+            asig += asignatura.nombre + ",";
+
+        });
+           
+        return `Estudiante: 
+            ID: ${this.#id}
+            Nombre: ${this.nombre}
+            Edad: ${this.edad}
+            Dirección: ${this.#direccion.toString()}
+            Asignaturas: ${asig}`;
+    }
+    
 
     // Métodos
     matricular(...asignaturas) {
@@ -215,7 +222,8 @@ class Estudiante extends Persona {
     agregarCalificacion(asignaturaNombre, ...calificaciones) {
         // Validar todas las calificaciones antes de agregarlas
         calificaciones.forEach(calificacion => {
-            if (!Number.isInteger(calificacion) || calificacion < 0 || calificacion > 10) {
+            
+            if ( calificacion < 0 || calificacion > 10) {
                 console.log("La calificación debe ser un número entero entre 0 y 10.");
             }
         });
@@ -319,7 +327,7 @@ class listaEstudiante {
             console.log("No hay estudiantes")
         }
 
-        return (cantidadEstudiantes / totalPromedio);
+        return (totalPromedio / cantidadEstudiantes);
     }
 
 
@@ -367,6 +375,97 @@ class listaEstudiante {
     }
 
 }
+
+
+function pruebas() {
+    // Crear asignaturas
+    let matematicas = new Asignatura("Matemáticas");
+    let historia = new Asignatura("Historia");
+    let literatura = new Asignatura("Literatura");
+    let fisica = new Asignatura("Física");
+
+    // Agregar calificaciones a las asignaturas
+    matematicas.calificaciones = [8, 9, 10];
+    historia.calificaciones = [7, 6, 8];
+    literatura.calificaciones = [10, 9, 9];
+    fisica.calificaciones = [6, 5, 7];
+
+    // Crear direcciones
+    let direccion1 = new Direccion("Calle Falsa", 123, 2, "28080", "Madrid", "Madrid");
+    let direccion2 = new Direccion("Avenida Siempre Viva", 456, 3, "28001", "Madrid", "Madrid");
+
+    // Crear estudiantes
+    let estudiante1 = new Estudiante(1, "Juan Pérez", 20, direccion1);
+    let estudiante2 = new Estudiante(2, "Ana García", 22, direccion2);
+    let estudiante3 = new Estudiante(3, "Pedro Gómez", 21, direccion1);
+
+    // Matricular estudiantes en asignaturas
+    estudiante1.matricular(matematicas, historia, literatura);
+    estudiante2.matricular(historia, literatura);
+    estudiante3.matricular(fisica, historia);
+
+    // Agregar calificaciones a estudiantes
+    estudiante1.agregarCalificacion("Matemáticas", 8, 9);
+    estudiante1.agregarCalificacion("Historia", 7);
+    estudiante2.agregarCalificacion("Historia", 6, 7);
+    estudiante2.agregarCalificacion("Literatura", 10, 9);
+    estudiante3.agregarCalificacion("Física", 7, 8);
+
+    // Calcular promedios de los estudiantes
+    console.log(`Promedio de ${estudiante1.nombre}: ${estudiante1.calcularPromedio()}`);
+    console.log(`Promedio de ${estudiante2.nombre}: ${estudiante2.calcularPromedio()}`);
+    console.log(`Promedio de ${estudiante3.nombre}: ${estudiante3.calcularPromedio()}`);
+
+    // Mostrar los detalles de los estudiantes
+    console.log(estudiante1.toString());
+    console.log(estudiante2.toString());
+    console.log(estudiante3.toString());
+
+    // Crear lista de estudiantes
+    let listaEstudiantes = new listaEstudiante();
+
+    // Agregar estudiantes a la lista
+    listaEstudiantes.agregarEstudiante(estudiante1);
+    listaEstudiantes.agregarEstudiante(estudiante2);
+    listaEstudiantes.agregarEstudiante(estudiante3);
+
+    // Verificar que no se agregue un estudiante duplicado
+    listaEstudiantes.agregarEstudiante(estudiante1);  // Intentando agregar un duplicado
+
+    // Eliminar un estudiante
+    listaEstudiantes.eliminarEstudiante(estudiante2);
+
+    // Buscar estudiantes por nombre
+    listaEstudiantes.buscarEstudiantePorNombre("Juan");  // Debería encontrar a Juan Pérez
+    listaEstudiantes.buscarEstudiantePorNombre("Ana");   // Debería mostrar que Ana fue eliminada
+
+    // Generar reporte de estudiantes con asignaturas y calificaciones
+    listaEstudiantes.generarReporte();
+
+    // Listar estudiantes con sus asignaturas
+    listaEstudiantes.listaDeAsignaturasXestudiante();
+
+    // Mostrar las calificaciones y promedios por asignatura
+    listaEstudiantes.calificacionesYpromedioAsig();
+
+    // Buscar asignaturas por patrón (ejemplo, "Liter")
+    estudiante1.buscarPatronAsignatura("Liter");
+    estudiante2.buscarPatronAsignatura("Fís");
+    
+    // Desmatricular un estudiante de una asignatura
+    estudiante1.desmatricular(matematicas);
+    estudiante3.desmatricular(fisica);
+
+    // Verificar el estado después de desmatricular
+    console.log(estudiante1.toString());
+    console.log(estudiante3.toString());
+
+    // Probar el cálculo del promedio general de todos los estudiantes
+    console.log("Promedio general de todos los estudiantes: " + listaEstudiantes.calcularPromedioGeneral());
+}
+
+// Llamada a la función para realizar las pruebas
+pruebas();
 
 
 // Menú interactivo
@@ -528,7 +627,12 @@ function agregarCalificaciones() {
         let asignatura = estudiante.asignaturas.find(a => a.nombre === nombreAsignatura);
         
         if (asignatura) {
-            let calificaciones = prompt("Ingresa las calificaciones separadas por coma:").split(',');
+            let calificacionesPromt = prompt("Ingresa las calificaciones separadas por coma:").split(',');
+            let calificaciones = [];
+            calificacionesPromt.forEach(n =>{
+                let valores = parseFloat(n)
+                calificaciones.push(valores);
+            })
             estudiante.agregarCalificacion(nombreAsignatura, ...calificaciones);
         } else {
             console.log("El estudiante no está matriculado en esta asignatura.");
@@ -625,3 +729,5 @@ function eliminarA(){
 let asignaturas = new Asignaturas();
 let listaEstudiantes = new listaEstudiante();
 mostrarMenu();
+
+

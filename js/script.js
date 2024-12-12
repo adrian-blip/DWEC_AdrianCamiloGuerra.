@@ -36,14 +36,12 @@ class Asignatura {
     }
 
 
+   
+
     promedioAsig() {
         if (this.#calificaciones.length > 0) {
-            let cantidadCali = this.#calificaciones.length;
-            let sumaCali = 0;
-            this.#calificaciones.forEach(calificacion => {
-                sumaCali += calificacion;
-            });
-            return  sumaCali / cantidadCali;
+            return this.#calificaciones.reduce((sumtaTotal,valor) => sumtaTotal + valor) / this.#calificaciones.length;
+            
         } else {
             console.log("No hay calificaciones")
         }

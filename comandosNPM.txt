@@ -1,0 +1,6 @@
+Pasos para generar la documentacion con JSDoc:
+1. npm install --save-dev jsdoc -> Instalar JSDoc (node_modules)
+2. npm init -> Genera "package.json"
+3. Crear el archivo jsdoc.json, con el contenido que tiene dentro.
+4. Usar "npm run todo" o en su defecto usar "$ npx jsdoc -c jsdoc.json" y elimiar la carpeta que genera cade vez.
+5. Para ver la documentacion abrir el "index.html" que esta en la carpeta docs en la web.

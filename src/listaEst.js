@@ -1,10 +1,10 @@
 
 
- /**
- * # Clase listaEstudiante
- * 
- * Representa una colección de estudiantes con métodos para gestionar la lista y generar reportes.
- */
+/**
+* # Clase listaEstudiante
+* 
+* Representa una colección de estudiantes con métodos para gestionar la lista y generar reportes.
+*/
 export class listaEstudiante {
     constructor() {
         this.estudiantes = []; // Lista de objetos Estudiante
@@ -52,26 +52,56 @@ export class listaEstudiante {
     }
 
     /**
-     * ## Método: Calcular promedio general
-     * 
-     * Calcula el promedio general de todas las calificaciones de todos los estudiantes.
-     * 
-     * @returns {number | undefined} - Promedio general o undefined si no hay estudiantes.
-     */
-    calcularPromedioGeneral() {
-        try {
-            const totalPromedio = this.estudiantes.reduce((acum, estudiante) => acum + estudiante.calcularPromedio(), 0);
-            const cantidadEstudiantes = this.estudiantes.length;
+ * Busca estudiantes por nombre y muestra los resultados que coinciden con el patrón.
+ * 
+ * @param {string} patron - El patrón de búsqueda que puede ser parte del nombre del estudiante.
+ * @returns {void} - No retorna nada, solo muestra los resultados en la consola.
+ * 
+ * @example
+ * // Ejemplo de búsqueda
+ * buscarEstudiantePorNombre("juan");
+ * // Esto imprimirá todos los estudiantes cuyo nombre contenga "juan", sin importar mayúsculas o minúsculas.
+ */
+    buscarEstudiantePorNombre(patron) {
+        // Buscar estudiantes que coincidan con el patrón
+        let busqueda = this.estudiantes.filter(e => e.nombre.toLowerCase().includes(patron.toLowerCase()));
 
-            if (cantidadEstudiantes > 0) {
-                return totalPromedio / cantidadEstudiantes;
-            } else {
-                console.error("No hay estudiantes en la lista.");
-            }
-        } catch (error) {
-            console.error("Error al calcular promedio general:", error.message);
+        if (busqueda.length > 0) {
+            // Si se encontraron estudiantes que coinciden
+            console.log("Estudiantes que coinciden con el patron: " + patron);
+
+            // Mostrar los estudiantes encontrados
+            busqueda.forEach(e => {
+                console.log(e.toString());
+            });
+        } else {
+            // Si no se encontraron resultados
+            console.log("Búsqueda fallida: No se encontraron estudiantes.");
         }
     }
+
+    calcularPromedioGeneral() {
+        if (this.estudiantes.length === 0) {
+            console.error("No hay estudiantes en la lista.");
+            return null;
+        }
+    
+        // Sumar los promedios de todos los estudiantes
+        const totalPromedio = this.estudiantes.reduce((acum, estudiante) => {
+            const promedio = estudiante.calcularPromedio();
+            if (promedio !== null) {
+                acum += promedio;
+            }
+            return acum;
+        }, 0);
+    
+        // Calcular el promedio general
+        let valor = totalPromedio / this.estudiantes.length;
+        console.log("El promedio general es: " + valor);
+        return valor;  // Asegúrate de devolver el valor calculado
+    }
+    
+
 
     /**
      * ## Método: Generar reporte

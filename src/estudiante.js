@@ -5,6 +5,7 @@
  * Permite gestionar datos como dirección, asignaturas, calificaciones, entre otros.
  */
 import { Persona } from './persona.js';
+import { Asignatura } from './asignatura.js';
 
 export class Estudiante extends Persona {
     #id;
@@ -94,21 +95,27 @@ export class Estudiante extends Persona {
         }
     }
 
-    /**
+
+     /**
      * ## Método: Matricular asignaturas
      * 
-     * Matricula al estudiante en una o más asignaturas.
+     * Matricula al estudiante en una o más asignaturas. Asegura que cada estudiante tenga su propia instancia de la asignatura.
      * 
      * @param {...Asignatura} asignaturas - Asignaturas a matricular.
      */
-    matricular(...asignaturas) {
+     matricular(...asignaturas) {
         try {
             asignaturas.forEach(asignatura => {
-                if (!this.#asignaturas.includes(asignatura)) {
-                    this.#asignaturas.push(asignatura);
-                    console.log(`Asignatura "${asignatura.nombre}" matriculada.`);
+                // Clonamos la asignatura para asegurarnos de que sea única por estudiante
+                let nuevaAsignatura = new Asignatura(asignatura.nombre); // Crea una nueva instancia de la asignatura
+                // Aquí también podemos copiar las calificaciones si es necesario
+                nuevaAsignatura.calificaciones = [...asignatura.calificaciones];
+                
+                if (!this.#asignaturas.includes(nuevaAsignatura)) {
+                    this.#asignaturas.push(nuevaAsignatura);
+                    console.log(`Asignatura "${nuevaAsignatura.nombre}" matriculada.`);
                 } else {
-                    console.log(`El estudiante ya está matriculado en "${asignatura.nombre}".`);
+                    console.log(`El estudiante ya está matriculado en "${nuevaAsignatura.nombre}".`);
                 }
             });
         } catch (error) {
@@ -168,33 +175,40 @@ export class Estudiante extends Persona {
     }
 
     /**
-     * ## Método: Calcular promedio
-     * 
-     * Calcula el promedio de las calificaciones de todas las asignaturas.
-     * 
-     * @returns {number|undefined} - Promedio de calificaciones o `undefined` si no hay calificaciones.
-     */
-    calcularPromedio() {
-        let totalCalificaciones = 0;
-        let cantidadCalificaciones = 0;
+ * Calcula el promedio de calificaciones de todas las asignaturas de un estudiante.
+ * 
+ * @returns {number|null} El promedio de las calificaciones o null si no hay calificaciones.
+ */
+calcularPromedio() {
+    let totalCalificaciones = 0;
+    let cantidadCalificaciones = 0;
 
-        try {
-            this.#asignaturas.forEach(asignatura => {
-                asignatura.calificaciones.forEach(calificacion => {
-                    totalCalificaciones += calificacion;
-                    cantidadCalificaciones++;
-                });
-            });
-
-            if (cantidadCalificaciones > 0) {
-                return totalCalificaciones / cantidadCalificaciones;
-            } else {
-                console.error("No hay calificaciones para calcular el promedio.");
-            }
-        } catch (error) {
-            console.error("Error al calcular el promedio:", error.message);
-        }
+    // Asegurarse de que #asignaturas existe y tiene asignaturas
+    if (!this.#asignaturas || this.#asignaturas.length === 0) {
+        console.error("El estudiante no tiene asignaturas.");
+        return null;
     }
+
+    // Sumar todas las calificaciones de las asignaturas
+    this.#asignaturas.forEach(asignatura => {
+        if (asignatura.calificaciones && asignatura.calificaciones.length > 0) {
+            asignatura.calificaciones.forEach(calificacion => {
+                totalCalificaciones += calificacion;
+                cantidadCalificaciones++;
+            });
+        }
+    });
+
+    // Si no hay calificaciones, retornar un mensaje de error
+    if (cantidadCalificaciones === 0) {
+        console.error("No hay calificaciones para calcular el promedio.");
+        return null;
+    }
+
+    // Retornar el promedio de calificaciones
+    return totalCalificaciones / cantidadCalificaciones;
+}
+
 
     /**
      * ## Método: Buscar asignaturas

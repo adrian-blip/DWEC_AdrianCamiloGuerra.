@@ -244,6 +244,9 @@ Así es como se ve la página en su versión optimizada para producción:
 Si se accede a la página desde un navegador antiguo en este caso firefox version 30, se mostrará una versión compatible con tecnologías más antiguas:
 
 ![Vista en Navegadores Antiguos](../img-docs/CapOlderWeb.jpg)
+![Vista de consola con las pruebas comprobando funcionalidades](../img-docs/CapOlderWebFunc.jpg)
+[Vista de consola con las pruebas comprobando funcionalidades](../img-docs/console.jpg)
+
 
 
 

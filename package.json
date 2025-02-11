@@ -7,7 +7,11 @@
     "scripts": {
         "documenta": "jsdoc -c jsdoc.json",
         "limpia": "rimraf docs",
-        "todo": "npm-run-all limpia documenta"
+        "todo": "npm-run-all limpia documenta",
+        "desarrollo": "cross-env modo=development npm-run-all --serial antiguo moderno",
+    "producion": "cross-env modo=production npm-run-all --serial antiguo moderno",
+    "antiguo": "webpack --config webpack.legacy.js --mode $modo",
+    "moderno": "webpack --config webpack.modern.js --mode $modo"
     },
     "keywords": [],
     "author": "Adrian",

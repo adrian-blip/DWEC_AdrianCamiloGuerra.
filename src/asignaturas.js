@@ -14,6 +14,17 @@ export class Asignaturas {
     }
 
     /**
+ * Crea una nueva asignatura con el nombre proporcionado por el usuario.
+ * @function
+ */
+ crearAsignatura() {
+    let nombre = prompt("Ingresa el nombre de la asignatura:");
+    let asignatura = new Asignatura(nombre);
+    asignaturas.agregarAsignatura(asignatura);
+    mostrarMenu();
+}
+
+    /**
      * ## Método: agregarAsignatura
      * 
      * Este método agrega una nueva asignatura a la lista, siempre y cuando no exista ya una asignatura con el mismo nombre.
@@ -57,4 +68,33 @@ export class Asignaturas {
             console.error("Error al quitar asignatura:", error.message); // Manejo de errores
         }
     }
+
+    /**
+ * Busca asignaturas por nombre mediante un patrón y muestra las coincidencias.
+ * 
+ * @returns {void} - No retorna nada, solo muestra las asignaturas encontradas en la consola.
+ */
+ buscarAsignaturas() {
+    // Solicitar el patrón de búsqueda
+    let patron = prompt("Ingresa el patrón para buscar asignaturas:");
+
+    // Filtrar las asignaturas que coinciden con el patrón
+    let asignaturasEncontradas = asignaturas.listaDeAsignaturas.filter(a => 
+        a.nombre.toLowerCase().includes(patron.toLowerCase())
+    );
+
+    // Verificar si se encontraron asignaturas
+    if (asignaturasEncontradas.length > 0) {
+        console.log("Asignaturas que coinciden con el patrón '" + patron + "':");
+        
+        // Mostrar las asignaturas encontradas
+        asignaturasEncontradas.forEach(a => {
+            console.log(a.nombre); // Mostrar el nombre de la asignatura
+        });
+    } else {
+        console.log("No se encontraron asignaturas con ese patrón.");
+    }
+
+    
+}
 }

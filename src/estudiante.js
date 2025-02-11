@@ -230,4 +230,33 @@ calcularPromedio() {
             console.error("Error al buscar asignaturas:", error.message);
         }
     }
+
+    /**
+ * Muestra el promedio de un estudiante dado su ID.
+ * @function
+ */
+verPromedioEstudiante() {
+    let idEstudiante = prompt("Ingresa el ID del estudiante:");
+    let estudiante = listaEstudiantes.estudiantes.find(e => e.id == idEstudiante);
+    
+    if (estudiante) {
+        console.log(`El promedio de ${estudiante.nombre} es: ${estudiante.calcularPromedio()}`);
+    } else {
+        console.log("Estudiante no encontrado.");
+    }
+    
+}
+
+/**
+ * Elimina un estudiante basado en su ID.
+ * @function
+ */
+ eliminarEs() {
+    let idEstudiante = prompt("Ingresa el ID del estudiante a eliminar:");
+    let estudiante = listaEstudiantes.estudiantes.find(e => e.id == idEstudiante);
+    if(estudiante) {
+        listaEstudiantes.eliminarEstudiante(estudiante);
+    }
+    
+}
 }

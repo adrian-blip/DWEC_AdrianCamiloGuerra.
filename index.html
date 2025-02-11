@@ -1,11 +1,77 @@
+
+
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto js</title>
+    <title>Gestión de Estudiantes</title>
+    <script defer type="module" src="bundle.modern.js"></script>
+    <script defer src="bundle.legacy.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <script type="module" src="./src/script.js"></script>
+    <script src="./src/app.js"></script> 
+    
 </head>
 <body>
-    <script type="module" src="./src/script.js"></script>
+    <nav class="nav-menu">
+        <button onclick="cambiarSeccion('menu')">Inicio</button>
+        <button onclick="cambiarSeccion('crearEstudiante')">Crear Estudiante</button>
+        <button onclick="cambiarSeccion('crearAsignatura')">Crear Asignatura</button>
+        <button onclick="cambiarSeccion('matricularEstudiante')">Matricular Estudiante</button>
+        <button onclick="cambiarSeccion('gestionarCalificaciones')">Gestionar Calificaciones</button>
+        <button onclick="cambiarSeccion('reportes')">Ver Reportes</button>
+    </nav>
+
+    <form id="menu" class="seccion">
+        <h1>Bienvenido al sistema de gestión de estudiantes</h1>
+    </form>
+
+    <form id="crearEstudiante" class="seccion">
+        <h2>Crear Estudiante</h2>
+        <input type="text" id="nombre" placeholder="Nombre">
+        <input type="number" id="edad" placeholder="Edad">
+        <input type="text" id="direccion" placeholder="Dirección">
+        <button onclick="agregarEstudiante()">Guardar</button>
+    </form>
+
+    <form id="crearAsignatura" class="seccion">
+        <h2>Crear Asignatura</h2>
+        <input type="text" id="nombreAsignatura" placeholder="Nombre de la Asignatura">
+        <button onclick="agregarAsignatura()">Guardar</button>
+    </form>
+
+    <form id="matricularEstudiante" class="seccion">
+        <h2>Matricular Estudiante</h2>
+        <input type="text" id="nombreEstudianteMatricular" placeholder="Nombre del Estudiante">
+        <input type="text" id="nombreAsignaturaMatricular" placeholder="Asignatura">
+        <button onclick="matricularEstudiante()">Matricular</button>
+    </form>
+
+    <form id="gestionarCalificaciones" class="seccion">
+        <h2>Gestionar Calificaciones</h2>
+        <input type="text" id="nombreEstudianteCalificacion" placeholder="Nombre del Estudiante">
+        <input type="text" id="nombreAsignaturaCalificacion" placeholder="Asignatura">
+        <input type="number" id="calificacion" placeholder="Calificación">
+        <button onclick="agregarCalificaciones()">Agregar Calificación</button>
+    </form>
+
+    <form id="reportes" class="seccion">
+        <h2>Reportes</h2>
+        <button onclick="verPromedioEstudiante()">Ver Promedio por Estudiante</button>
+        <button onclick="buscarAsignaturas()">Buscar Asignaturas</button>
+        <button onclick="buscarEstudiantes()">Buscar Estudiantes</button>
+        <button onclick="verListaEstudiantes()">Ver Lista de Estudiantes</button>
+        <button onclick="verReporteEstudiantes()">Ver Reporte de Estudiantes</button>
+        <button onclick="listaDeAsignaturasPorestudiante()">Lista de Asignaturas por Estudiante</button>
+        <button onclick="calificacionesYpromedioAsignatura()">Calificaciones y Promedio por Asignatura</button>
+        <button onclick="PromedioGeneral()">Promedio General</button>
+    </form>
+
+    
 </body>
 </html>
+

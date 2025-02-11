@@ -177,7 +177,74 @@ Este proyecto utiliza una serie de scripts de NPM para facilitar la generación 
 - **`generar-bundle`**: Ejecuta `limpia-com`, luego `des` y `prod` para limpiar y generar los bundles tanto en modo desarrollo como en producción.
   ```sh
   npm run generar-bundle
+
+  
   ```
+
+
+## Scripts de NPM
+
+Este proyecto utiliza una serie de scripts de NPM para facilitar la generación de documentación, la compilación del código y la creación de los bundles. A continuación, se explican los scripts disponibles:
+
+### 📚 Generación de documentación con JSDoc
+
+- **`doc`**: Ejecuta JSDoc utilizando la configuración definida en `jsdoc.json`.
+  ```sh
+  npm run doc
+  ```
+- **`limpia:doc`**: Elimina la carpeta `docs` donde se genera la documentación.
+  ```sh
+  npm run limpia:doc
+  ```
+- **`generar:jsdoc`**: Ejecuta `limpia:doc` y luego `doc` para regenerar la documentación desde cero.
+  ```sh
+  npm run generar:jsdoc
+  ```
+
+### ⚙️ Compilación con Webpack
+
+- **`antiguo`**: Compila el código utilizando la configuración `webpack.legacy.js`. La variable `modo` debe estar definida (por defecto: `development` o `production`).
+  ```sh
+  npm run antiguo
+  ```
+- **`moderno`**: Compila el código utilizando la configuración `webpack.modern.js`.
+  ```sh
+  npm run moderno
+  ```
+- **`des`**: Compila ambas versiones (`antiguo` y `moderno`) en modo `development`.
+  ```sh
+  npm run des
+  ```
+- **`prod`**: Compila ambas versiones en modo `production`.
+  ```sh
+  npm run prod
+  ```
+
+### 🔧 Limpieza y generación de bundles
+
+- **`limpia-com`**: Elimina la carpeta `compilado` donde se guardan los archivos generados.
+  ```sh
+  npm run limpia-com
+  ```
+- **`generar-bundle`**: Ejecuta `limpia-com`, luego `des` y `prod` para limpiar y generar los bundles tanto en modo desarrollo como en producción.
+  ```sh
+  npm run generar-bundle
+  ```
+
+## Vista en Producción y Navegadores Antiguos
+
+### 🌍 Vista en Producción
+
+Así es como se ve la página en su versión optimizada para producción:
+
+![Vista en Producción](../img-docs/CapProduction.jpg)
+
+### 🏛️ Vista en Navegadores Antiguos
+
+Si se accede a la página desde un navegador antiguo en este caso firefox version 30, se mostrará una versión compatible con tecnologías más antiguas:
+
+![Vista en Navegadores Antiguos](../img-docs/CapOlderWeb.jpg)
+
 
 
 

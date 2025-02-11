@@ -245,7 +245,7 @@ Si se accede a la página desde un navegador antiguo en este caso firefox versio
 
 ![Vista en Navegadores Antiguos](../img-docs/CapOlderWeb.jpg)
 ![Vista de consola con las pruebas comprobando funcionalidades](../img-docs/CapOlderWebFunc.jpg)
-[Vista de consola con las pruebas comprobando funcionalidades](../img-docs/console.jpg)
+![Vista de consola con las pruebas comprobando funcionalidades](../img-docs/console.jpg)
 
 
 

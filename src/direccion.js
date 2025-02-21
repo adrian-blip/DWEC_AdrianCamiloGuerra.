@@ -36,4 +36,15 @@ export class Direccion {
     toString() {
         return `${this.calle} ${this.numero}, Piso ${this.piso}, ${this.codigoPostal} ${this.localidad}, ${this.provincia}`;
     }
+    toJSON() {
+        return {
+            calle: this.calle,
+            numero: this.numero,
+            piso: this.piso,
+            codigoPostal: this.codigoPostal,
+            provincia: this.provincia,
+            localidad: this.localidad
+        };
+    }
+    
 }

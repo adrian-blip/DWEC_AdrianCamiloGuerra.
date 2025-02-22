@@ -1,4 +1,5 @@
 import { Estudiante } from './estudiante.js';
+import { Asignaturas } from './asignaturas.js';
 /**
 * # Clase listaEstudiante
 * 
@@ -166,7 +167,7 @@ export class listaEstudiante {
  */
     buscarEstudiantePorNombre(patron) {
         // Buscar estudiantes que coincidan con el patrón
-        let patronx = document.getElementById("inputPatronxEstudiante").value.trim().toLowerCase();
+        let patronx = document.getElementById("inputPatronEstudiante").value.trim().toLowerCase();
     let resultadoEstudiantes = document.getElementById("resultadoEstudiantes");
 
     resultadoEstudiantes.innerHTML = ""; // Limpiar resultados anteriores
@@ -439,7 +440,7 @@ matricularEstudiante() {
     if (estudiante) {
         nombreAsignaturas.forEach(nombreAsignatura => {
             nombreAsignatura = nombreAsignatura.trim();
-            let asignatura = listaAsignaturas.asignaturas.find(a => a.nombre === nombreAsignatura);
+            let asignatura = this.asignaturas.find(a => a.nombre === nombreAsignatura);
             
             if (asignatura) {
                 estudiante.matricular(asignatura);

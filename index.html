@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <script type="module" src="./src/script.js"></script>
     <script type="module" src="./src/app.js"></script>
-    <script src="./src/syle.js"></script>
+    <script src="./js/index.js"></script>
 </head>
 
 <body>
@@ -17,9 +17,9 @@
         <button onclick="cambiarSeccion('crearEstudiante')">Crear Estudiante</button>
         <button onclick="cambiarSeccion('crearAsignatura')">Crear Asignatura</button>
         <button onclick="cambiarSeccion('matricularEstudiante')">Matricular Estudiante</button>
-        <button onclick="cambiarSeccion('desmatricularEstudiante')">Matricular Estudiante</button>
+        <button onclick="cambiarSeccion('desmatricularEstudiante')">Desmatricular Estudiante</button>
         <button onclick="cambiarSeccion('gestionarCalificaciones')">Gestionar Calificaciones</button>
-        <button onclick="mostrarPopup()">Abrir Reportes</button>
+        <div class="btn" onclick="mostrarPopup()">Abrir Reportes</div>
 
         <form id="popupReportes" class="popup">
             <h2>Reportes</h2>
@@ -85,7 +85,7 @@
         <input type="text" id="nombreEstudianteCalificacion" placeholder="Nombre del Estudiante" required>
         <input type="text" id="nombreAsignaturaCalificacion" placeholder="Asignatura" required>
         <input type="number" id="calificacion" placeholder="Calificación" required min="0" max="100">
-        <button type="button" onclick="agregarCalificaciones()">Agregar Calificación</button>
+        <button type="submit" >Agregar Calificación</button>
     </form>
 
     <!-- Modal para Ver Promedio de Estudiante -->
@@ -94,17 +94,18 @@
             <span class="cerrar" onclick="cerrarModal('modalPromedio')">&times;</span>
             <h3>Ver Promedio de un Estudiante</h3>
             <input type="number" id="idEstudiantePromedio" placeholder="ID del Estudiante">
-            <button onclick="verPromedioEstudiante()">Promedio</button>
+            <button type="submit">Promedio</button>
             <p id="resultadoPromedio"></p>
         </div>
     </form>
+
     <form id="modalAsigBusq" class="modal">
         <div class="modal-contenido">
             <span class="cerrar" onclick="cerrarModal('modalReportes')">&times;</span>
             <h2>Buscar Asignatura</h2>
             <input type="text" id="inputPatronAsignatura" placeholder="Ingrese el patrón de búsqueda">
-            <button id="buscarPatronAsignatura">Buscar</button>
-            <div id="resultadoAsignaturas"></div>
+            <button type="submit" id="buscarPatronAsignatura">Buscar</button>
+            
         </div>
     </form>
     <form id="modalEstBus" class="modal">
@@ -112,14 +113,15 @@
             <span class="cerrar" onclick="cerrarModal('modalReportes')">&times;</span>
             <h2>Buscar Estudiante</h2>
             <input type="text" id="inputPatronEstudiante" placeholder="Ingrese el nombre del estudiante">
-            <button onclick="buscarEstudiantePorNombre()">Buscar</button>
-            <div id="resultadoEstudiantes"></div>
+            <button type="submit" >Buscar</button>
+            
         </div>
     </form>
 
 
-    <h2>Lista de asignaturas</h2>
+    <h2>Lista de Estudiantes</h2>
     <div id="listaEstudiantes"></div>
+
     <h2>Lista de Asignaturas</h2>
     <ul id="listaAsignaturas"></ul>
 
@@ -133,6 +135,10 @@
     <div id="tablaCalificaciones"></div>
 
     <p id="promedioGeneral">Promedio General: --</p>
+
+    <p id="resultadoEstudiantes"> Busqueda por patron estudiante</p>
+    
+    <p id="resultadoAsignaturas"> Busqueda por patron asignatura</p>
 
 
 </body>

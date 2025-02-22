@@ -63,6 +63,17 @@ h2 {
     transition: background 0.3s;
 }
 
+.btn{
+    background: white;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s; 
+}
+
 .nav-menu button:hover {
     background: #0056b3;
     color: white;
@@ -158,4 +169,13 @@ button:hover {
     font-size: 20px;
     cursor: pointer;
 }
+
+input.valid {
+    border: 2px solid green;
+}
+
+input.invalid {
+    border: 2px solid red;
+}
+
 

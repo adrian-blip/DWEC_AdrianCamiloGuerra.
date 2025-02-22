@@ -7,6 +7,7 @@ import { Asignaturas } from './asignaturas.js';
 
 
 document.addEventListener("DOMContentLoaded", function() {
+    event.preventDefault();
     const listaEstudiantes = new listaEstudiante();  
     const listaAsignaturas = new Asignaturas();     
 
@@ -43,6 +44,11 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("gestionarCalificaciones").addEventListener("submit", function(event) {
         event.preventDefault();
         listaEstudiantes.agregarCalificaciones();
+    });
+
+    document.getElementById("modalPromedio").addEventListener("submit", function(event) {
+        event.preventDefault();
+        listaEstudiantes.verPromedioEstudiante();
     });
 
     // Evento para buscar asignatura por patrón

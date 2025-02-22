@@ -6,6 +6,7 @@
  */
 import { Persona } from './persona.js';
 import { Asignatura } from './asignatura.js';
+import { Direccion } from './direccion.js';
 
 export class Estudiante extends Persona {
     #id;
@@ -82,13 +83,21 @@ export class Estudiante extends Persona {
      */
     toString() {
         try {
-            let asig = this.#asignaturas.map(asignatura => asignatura.nombre).join(", ");
-            return `Estudiante: 
-                ID: ${this.#id}
-                Nombre: ${this.nombre}
-                Edad: ${this.edad}
-                Dirección: ${this.#direccion.toString()}
-                Asignaturas: ${asig}`;
+            
+            let datos_asignaturas = this.#asignaturas.map(materia => {
+                return {
+                    nombre: materia.nombre,
+                    notas: materia.calificaciones.map(calificacion => calificacion).join(", "),
+                }
+            });
+    
+            return {
+                id: this.#id,
+                nombre: this.nombre,
+                edad: this.edad,
+                ...this.direccion,
+                asignaturas: datos_asignaturas,
+            };
         } catch (error) {
             console.error("Error al generar descripción del estudiante:", error.message);
             return "Información no disponible";

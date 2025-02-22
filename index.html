@@ -23,26 +23,27 @@
 
         <form id="popupReportes" class="popup">
             <h2>Reportes</h2>
-            <button type="button" onclick="abrirModal('modalPromedio')">Ver Promedio por Estudiante</button>
-            <button type="button" onclick="abrirModal('modalAsigBusq')">Buscar Asignaturas</button>
-            <button type="button" onclick="abrirModal('modalEstBus')">Buscar Estudiantes</button>
-            <button onclick="verListaEstudiantes()">Ver Lista de Estudiantes</button>
-            <button onclick="verReporteEstudiantes()">Ver Reporte de Estudiantes</button>
-            <button onclick="listaDeAsignaturasPorestudiante()">Lista de Asignaturas por Estudiante</button>
-            <button onclick="calificacionesYpromedioAsignatura()">Calificaciones y Promedio por Asignatura</button>
-            <button onclick="PromedioGeneral()">Promedio General</button>
+            <button type="submit" onclick="abrirModal('modalPromedio')">Ver Promedio por Estudiante</button>
+            <button type="submit" onclick="abrirModal('modalAsigBusq')">Buscar Asignaturas</button>
+            <button type="submit" onclick="abrirModal('modalEstBus')">Buscar Estudiantes</button>
+            <button type="submit" id="verListaEstudiantes" onclick="verListaEstudiantes()">Ver Lista de Estudiantes</button>
+            <button type="submit" id="verReporteEstudiantes" onclick="verReporteEstudiantes()">Ver Reporte de Estudiantes</button>
+            <button type="submit" id="listaDeAsignaturasPorestudiante" onclick="listaDeAsignaturasPorestudiante()">Lista de Asignaturas por Estudiante</button>
+            <button type="submit" id="calificacionesYpromedioAsignatura" onclick="calificacionesYpromedioAsignatura()">Calificaciones y Promedio por Asignatura</button>
+            <button type="submit" id="PromedioGeneral" onclick="PromedioGeneral()">Promedio General</button>
             <button onclick="cerrarPopup()">Cerrar</button>
         </form>
 
         <!-- Botón para abrir el popup -->
 
     </nav>
-    
+
 
     <form id="crearEstudiante" class="seccion">
         <h2>Crear Estudiante</h2>
         <input type="text" id="id" placeholder="ID" required pattern="[0-9]+" title="Solo números">
-        <input type="text" id="nombre" placeholder="Nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+" title="Solo letras y espacios">
+        <input type="text" id="nombre" placeholder="Nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+"
+            title="Solo letras y espacios">
         <input type="number" id="edad" placeholder="Edad" required min="1">
         <input type="text" id="calle" placeholder="Calle" required>
         <input type="text" id="numero" placeholder="Número" required>
@@ -52,30 +53,32 @@
         <input type="text" id="localidad" placeholder="Localidad" required>
         <button type="submit">Guardar</button>
     </form>
-    
+
 
     <form id="crearAsignatura" class="seccion">
         <h2>Crear Asignatura</h2>
-        <input type="text" id="nombreAsignatura" placeholder="Nombre de la Asignatura" required pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+"
-            title="Solo letras y espacios">
-        <button  type="submit">Guardar</button>
+        <input type="text" id="nombreAsignatura" placeholder="Nombre de la Asignatura" required
+            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+" title="Solo letras y espacios">
+        <button type="submit">Guardar</button>
     </form>
-    
+
 
     <form id="matricularEstudiante" class="seccion">
         <h2>Matricular Estudiante</h2>
         <input type="number" id="idEstudianteMatricular" placeholder="ID del Estudiante" required>
-        <input type="text" id="nombreAsignaturaMatricular" placeholder="Nombre de la Asignatura (separadas por comas)" required>
+        <input type="text" id="nombreAsignaturaMatricular" placeholder="Nombre de la Asignatura (separadas por comas)"
+            required>
         <button type="submit">Matricular</button>
     </form>
 
     <form id="desmatricularEstudiante" class="seccion">
         <h2>Desmatricular Estudiante</h2>
         <input type="number" id="idEstudianteDesmatricular" placeholder="ID del Estudiante" required>
-        <input type="text" id="nombreAsignaturaDesmatricular" placeholder="Nombre de la Asignatura (separadas por comas)" required>
+        <input type="text" id="nombreAsignaturaDesmatricular"
+            placeholder="Nombre de la Asignatura (separadas por comas)" required>
         <button type="submit">Desmatricular</button>
     </form>
-    
+
 
     <form id="gestionarCalificaciones" class="seccion">
         <h2>Gestionar Calificaciones</h2>
@@ -85,38 +88,51 @@
         <button type="button" onclick="agregarCalificaciones()">Agregar Calificación</button>
     </form>
 
-   <!-- Modal para Ver Promedio de Estudiante -->
-<form id="modalPromedio" class="modal">
-    <div class="modal-contenido">
-        <span class="cerrar" onclick="cerrarModal('modalPromedio')">&times;</span>
-        <h3>Ver Promedio de un Estudiante</h3>
-        <input type="number" id="idEstudiantePromedio" placeholder="ID del Estudiante">
-        <button onclick="verPromedioEstudiante()">Promedio</button>
-        <p id="resultadoPromedio"></p>
-    </div>
-</form>
-<form id="modalAsigBusq" class="modal">
-    <div class="modal-contenido">
-        <span class="cerrar" onclick="cerrarModal('modalReportes')">&times;</span>
-        <h2>Buscar Asignatura</h2>
-        <input type="text" id="inputPatronAsignatura" placeholder="Ingrese el patrón de búsqueda">
-        <button  id="buscarPatronAsignatura">Buscar</button>
-        <div id="resultadoAsignaturas"></div>
-    </div>
-</form>
-<form id="modalEstBus" class="modal">
-    <div class="modal-contenido">
-        <span class="cerrar" onclick="cerrarModal('modalReportes')">&times;</span>
-        <h2>Buscar Estudiante</h2>
-        <input type="text" id="inputPatronEstudiante" placeholder="Ingrese el nombre del estudiante">
-        <button onclick="buscarEstudiantePorNombre()">Buscar</button>
-        <div id="resultadoEstudiantes"></div>
-    </div>
-</form>
+    <!-- Modal para Ver Promedio de Estudiante -->
+    <form id="modalPromedio" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalPromedio')">&times;</span>
+            <h3>Ver Promedio de un Estudiante</h3>
+            <input type="number" id="idEstudiantePromedio" placeholder="ID del Estudiante">
+            <button onclick="verPromedioEstudiante()">Promedio</button>
+            <p id="resultadoPromedio"></p>
+        </div>
+    </form>
+    <form id="modalAsigBusq" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalReportes')">&times;</span>
+            <h2>Buscar Asignatura</h2>
+            <input type="text" id="inputPatronAsignatura" placeholder="Ingrese el patrón de búsqueda">
+            <button id="buscarPatronAsignatura">Buscar</button>
+            <div id="resultadoAsignaturas"></div>
+        </div>
+    </form>
+    <form id="modalEstBus" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalReportes')">&times;</span>
+            <h2>Buscar Estudiante</h2>
+            <input type="text" id="inputPatronEstudiante" placeholder="Ingrese el nombre del estudiante">
+            <button onclick="buscarEstudiantePorNombre()">Buscar</button>
+            <div id="resultadoEstudiantes"></div>
+        </div>
+    </form>
 
-<div id="listaEstudiantes"></div>
-<h2>Lista de Asignaturas</h2>
-<ul id="listaAsignaturas"></ul>
+
+    <h2>Lista de asignaturas</h2>
+    <div id="listaEstudiantes"></div>
+    <h2>Lista de Asignaturas</h2>
+    <ul id="listaAsignaturas"></ul>
+
+    <div id="listaEstudiantes"></div>
+
+
+    <div id="reporteEstudiantes"></div>
+
+    <div id="asignaturasPorEstudiante"></div>
+
+    <div id="tablaCalificaciones"></div>
+
+    <p id="promedioGeneral">Promedio General: --</p>
 
 
 </body>

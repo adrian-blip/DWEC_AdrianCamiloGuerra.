@@ -1,4 +1,4 @@
-
+import { Estudiante } from './estudiante.js';
 /**
 * # Clase listaEstudiante
 * 
@@ -19,7 +19,12 @@ export class listaEstudiante {
                     estudianteData.id,
                     estudianteData.nombre,
                     estudianteData.edad,
-                    estudianteData.direccion
+                    estudianteData.calle,
+                    estudianteData.numero,
+                    estudianteData.piso,
+                    estudianteData.codigoPostal,
+                    estudianteData.provincia,
+                    estudianteData.localidad
                 )
             );
         }
@@ -100,7 +105,11 @@ export class listaEstudiante {
      * Guarda los estudiantes en localStorage.
      */
      guardarEnLocalStorage() {
-        localStorage.setItem("estudiantes", JSON.stringify(this.estudiantes));
+        localStorage.setItem("estudiantes", JSON.stringify(this.obtenerListaEsutudiantes()));
+    }
+
+    obtenerListaEsutudiantes() {
+        return this.estudiantes.map(estudiante => estudiante.toString());
     }
 
     /**
@@ -111,6 +120,7 @@ export class listaEstudiante {
         tabla.innerHTML = ""; // Limpiar la tabla antes de mostrar nuevos datos
 
         this.estudiantes.forEach(est => {
+            console.log(est.direccion);
             let fila = `<tr>
                             <td>${est.id}</td>
                             <td>${est.nombre}</td>
@@ -133,6 +143,7 @@ export class listaEstudiante {
             const index = this.estudiantes.findIndex(e => e.id === estudiante.id);
             if (index !== -1) {
                 this.estudiantes.splice(index, 1);
+                this.guardarEnLocalStorage();
                 console.log(`Estudiante ${estudiante.nombre} eliminado.`);
             } else {
                 console.error(`El estudiante ${estudiante.nombre} no existe.`);
@@ -185,23 +196,26 @@ export class listaEstudiante {
     calcularPromedioGeneral() {
         if (this.estudiantes.length === 0) {
             console.error("No hay estudiantes en la lista.");
+            document.getElementById("promedioGeneral").textContent = "No hay estudiantes en la lista.";
             return null;
         }
     
         // Sumar los promedios de todos los estudiantes
         const totalPromedio = this.estudiantes.reduce((acum, estudiante) => {
             const promedio = estudiante.calcularPromedio();
-            if (promedio !== null) {
-                acum += promedio;
-            }
-            return acum;
+            return promedio !== null ? acum + promedio : acum;
         }, 0);
     
         // Calcular el promedio general
-        let valor = totalPromedio / this.estudiantes.length;
-        console.log("El promedio general es: " + valor);
-        return valor;  // Asegúrate de devolver el valor calculado
+        let promedioGeneral = totalPromedio / this.estudiantes.length;
+        console.log("El promedio general es: " + promedioGeneral);
+    
+        // Mostrar en el HTML
+        document.getElementById("promedioGeneral").textContent = `Promedio General: ${promedioGeneral.toFixed(2)}`;
+    
+        return promedioGeneral;
     }
+    
     
 
         /**
@@ -217,7 +231,7 @@ verPromedioEstudiante() {
         return;
     }
 
-    let estudiante = listaEstudiantes.estudiantes.find(e => e.id == idEstudiante);
+    let estudiante = this.estudiantes.find(e => e.id == idEstudiante);
     
     if (estudiante) {
         resultadoPromedio.innerHTML = `El promedio de ${estudiante.nombre} es: ${estudiante.calcularPromedio()}`;
@@ -246,16 +260,42 @@ eliminarEs() {
      * Genera un reporte detallado de los estudiantes y sus asignaturas.
      */
  generarReporte() {
-    console.log("Reporte de Estudiantes:");
+    const reporteHTML = document.getElementById("reporteEstudiantes"); // Asegúrate de que este ID existe en el HTML
+    reporteHTML.innerHTML = ""; // Limpiar el contenido antes de agregar el reporte
+
+    if (this.estudiantes.length === 0) {
+        reporteHTML.innerHTML = "<p>No hay estudiantes registrados.</p>";
+        return;
+    }
+
+    let reporte = `<table border="1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Asignatura</th>
+                                <th>Calificaciones</th>
+                                <th>Promedio</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
     this.estudiantes.forEach(est => {
-        console.log(`- Estudiante: ${est.nombre} (ID: ${est.id})`);
-        est.asignaturas.forEach(asig => {
-            console.log(`  Asignatura: ${asig.nombre}`);
-            console.log(`    Calificaciones: ${asig.calificaciones.join(", ")}`);
-            console.log(`    Promedio: ${asig.promedioAsig()}`);
+        est.asignaturas.forEach((asig, index) => {
+            reporte += `<tr>
+                            ${index === 0 ? `<td rowspan="${est.asignaturas.length}">${est.id}</td>` : ""}
+                            ${index === 0 ? `<td rowspan="${est.asignaturas.length}">${est.nombre}</td>` : ""}
+                            <td>${asig.nombre}</td>
+                            <td>${asig.calificaciones.join(", ")}</td>
+                            <td>${asig.promedioAsig()}</td>
+                        </tr>`;
         });
     });
+
+    reporte += "</tbody></table>";
+    reporteHTML.innerHTML = reporte;
 }
+
 
 
     /**
@@ -264,16 +304,33 @@ eliminarEs() {
      * Genera un reporte de calificaciones y promedios por asignatura para cada estudiante.
      */
     calificacionesYpromedioAsig() {
-        console.log("Calificaciones y Promedios por Asignatura:");
+        let tabla = document.getElementById("tablaCalificaciones");
+        tabla.innerHTML = ""; // Limpiamos la tabla antes de agregar nuevos datos
+    
         this.estudiantes.forEach(est => {
-            console.log(`Estudiante: ${est.nombre}`);
-            est.asignaturas.forEach(asig => {
-                console.log(`  Asignatura: ${asig.nombre}`);
-                console.log(`    Calificaciones: ${asig.calificaciones.join(", ")}`);
-                console.log(`    Promedio: ${asig.promedioAsig()}`);
-            });
+            if (est.asignaturas.length === 0) {
+                let fila = `<tr>
+                                <td>${est.id}</td>
+                                <td>${est.nombre}</td>
+                                <td colspan="3">No tiene asignaturas</td>
+                            </tr>`;
+                tabla.innerHTML += fila;
+            } else {
+                est.asignaturas.forEach((asig, index) => {
+                    let fila = `<tr>
+                                    ${index === 0 ? `<td rowspan="${est.asignaturas.length}">${est.id}</td>` : ""}
+                                    ${index === 0 ? `<td rowspan="${est.asignaturas.length}">${est.nombre}</td>` : ""}
+                                    <td>${asig.nombre}</td>
+                                    <td>${asig.calificaciones.join(", ")}</td>
+                                    <td>${asig.promedioAsig()}</td>
+                                </tr>`;
+    
+                    tabla.innerHTML += fila;
+                });
+            }
         });
     }
+    
 
 /**
      * ## Método: Listar estudiantes
@@ -281,11 +338,36 @@ eliminarEs() {
      * Muestra una lista básica de estudiantes.
      */
 listarEstudiante() {
-    console.log("Lista de Estudiantes:");
+    const listaHTML = document.getElementById("listaEstudiantes"); // Asegúrate de que este ID existe en el HTML
+    listaHTML.innerHTML = ""; // Limpiar el contenido antes de agregar nuevos estudiantes
+
+    if (this.estudiantes.length === 0) {
+        listaHTML.innerHTML = "<p>No hay estudiantes registrados.</p>";
+        return;
+    }
+
+    let tabla = `<table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
     this.estudiantes.forEach(est => {
-        console.log(`Nombre: ${est.nombre}, ID: ${est.id}, Edad: ${est.edad}`);
+        tabla += `<tr>
+                    <td>${est.id}</td>
+                    <td>${est.nombre}</td>
+                    <td>${est.edad}</td>
+                </tr>`;
     });
+
+    tabla += "</tbody></table>";
+    listaHTML.innerHTML = tabla;
 }
+
 
 /**
      * ## Método: Listar asignaturas por estudiante
@@ -293,14 +375,46 @@ listarEstudiante() {
      * Muestra todas las asignaturas matriculadas por cada estudiante.
      */
 listaDeAsignaturasXestudiante() {
-    console.log("Asignaturas por Estudiante:");
+    const contenedorHTML = document.getElementById("asignaturasPorEstudiante"); // Asegúrate de que este ID existe en el HTML
+    contenedorHTML.innerHTML = ""; // Limpiar el contenido antes de agregar la tabla
+
+    if (this.estudiantes.length === 0) {
+        contenedorHTML.innerHTML = "<p>No hay estudiantes registrados.</p>";
+        return;
+    }
+
+    let tabla = `<table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Asignatura</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
     this.estudiantes.forEach(est => {
-        console.log(`Estudiante: ${est.nombre}`);
-        est.asignaturas.forEach(asig => {
-            console.log(`  Asignatura: ${asig.nombre}`);
-        });
+        if (est.asignaturas.length > 0) {
+            est.asignaturas.forEach((asig, index) => {
+                tabla += `<tr>
+                            ${index === 0 ? `<td rowspan="${est.asignaturas.length}">${est.id}</td>` : ""}
+                            ${index === 0 ? `<td rowspan="${est.asignaturas.length}">${est.nombre}</td>` : ""}
+                            <td>${asig.nombre}</td>
+                          </tr>`;
+            });
+        } else {
+            tabla += `<tr>
+                        <td>${est.id}</td>
+                        <td>${est.nombre}</td>
+                        <td>No tiene asignaturas</td>
+                      </tr>`;
+        }
     });
+
+    tabla += "</tbody></table>";
+    contenedorHTML.innerHTML = tabla;
 }
+
 
    /**
  * Matricula a un estudiante en una o varias asignaturas.
@@ -320,7 +434,7 @@ matricularEstudiante() {
     }
 
     // Buscar estudiante por ID
-    let estudiante = listaEstudiantes.estudiantes.find(e => e.id == idEstudiante);
+    let estudiante = this.estudiantes.find(e => e.id == idEstudiante);
     
     if (estudiante) {
         nombreAsignaturas.forEach(nombreAsignatura => {
@@ -329,13 +443,14 @@ matricularEstudiante() {
             
             if (asignatura) {
                 estudiante.matricular(asignatura);
+                this.guardarEnLocalStorage();
             } else {
                 
                 mostrarMensaje("No encontramos la asignatura");
             }
         });
 
-        this.guardarEnLocalStorage()
+        
         
         // Mensaje de éxito y limpiar formulario
         mostrarMensaje("Estudiante matriculado correctamente.");
@@ -361,7 +476,7 @@ desmatricularEstudiante() {
     }
 
     // Buscar estudiante por ID
-    let estudiante = listaEstudiantes.estudiantes.find(e => e.id == idEstudiante);
+    let estudiante = this.estudiantes.find(e => e.id == idEstudiante);
     
     if (estudiante) {
         nombreAsignaturas.forEach(nombreAsignatura => {
@@ -370,12 +485,13 @@ desmatricularEstudiante() {
 
             if (asignaturaIndex !== -1) {
                 estudiante.asignaturas.splice(asignaturaIndex, 1);
+                this.guardarEnLocalStorage();
             } else {
                 console.log(`El estudiante no está matriculado en '${nombreAsignatura}'.`);
             }
         });
 
-        this.guardarEnLocalStorage()
+       
         
         // Mensaje de éxito y limpiar formulario
         mostrarMensaje("Estudiante desmatriculado correctamente.");
@@ -406,7 +522,7 @@ desmatricularEstudiante() {
         }
     
         // Buscar estudiante por ID
-        let estudiante = listaEstudiantes.estudiantes.find(e => e.id == idEstudiante);
+        let estudiante = this.estudiantes.find(e => e.id == idEstudiante);
         
         if (estudiante) {
             let asignatura = estudiante.asignaturas.find(a => a.nombre === nombreAsignatura);
@@ -419,6 +535,7 @@ desmatricularEstudiante() {
                     let valor = parseFloat(n.trim());
                     if (!isNaN(valor)) {
                         calificaciones.push(valor);
+                        this.guardarEnLocalStorage();
                     } else {
                         console.log(`La calificación '${n.trim()}' no es válida y será ignorada.`);
                     }
@@ -426,9 +543,7 @@ desmatricularEstudiante() {
     
                 if (calificaciones.length > 0) {
                     asignatura.calificaciones.push(...calificaciones);
-    
-                    // Guardar cambios en localStorage
-                    guardarEnLocalStorage("estudiantes", listaEstudiantes.estudiantes);
+                    this.guardarEnLocalStorage();
     
                     mostrarMensaje(`Calificaciones agregadas correctamente a ${nombreAsignatura} del estudiante ${estudiante.nombre}.`);
                     document.getElementById("formAgregarCalificaciones").reset();

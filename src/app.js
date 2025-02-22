@@ -50,6 +50,32 @@ document.addEventListener("DOMContentLoaded", function() {
         event.preventDefault();
         listaAsignaturas.buscarPatronAsignatura();
     });
+
+
+    document.getElementById("verListaEstudiantes").addEventListener("submit", function(event) {
+        event.preventDefault();
+        listaEstudiantes.listarEstudiante();
+    });
+
+    document.getElementById("verReporteEstudiantes").addEventListener("submit", function(event) {
+        event.preventDefault();
+        listaEstudiantes.generarReporte();
+    });
+
+    document.getElementById("listaDeAsignaturasPorestudiante").addEventListener("submit", function(event) {
+        event.preventDefault();
+        listaEstudiantes.listaDeAsignaturasXestudiante();
+    });
+
+    document.getElementById("calificacionesYpromedioAsignatura").addEventListener("submit", function(event) {
+        event.preventDefault();
+        listaEstudiantes.calificacionesYpromedioAsig();
+    });
+
+    document.getElementById("PromedioGeneral").addEventListener("submit", function(event) {
+        event.preventDefault();
+        listaEstudiantes.calcularPromedioGeneral();
+    });
 });
 
 

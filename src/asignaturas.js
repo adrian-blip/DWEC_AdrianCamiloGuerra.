@@ -16,33 +16,45 @@ export class Asignaturas {
         this.cargarAsignaturas(); // Cargar datos de asignaturas al iniciar
         this.mostrarAsignaturas();
     }
+    cargarAsignaturas() {
+        const asignaturasJSON = localStorage.getItem('asignaturas');
+        if (asignaturasJSON) {
+            this.listaDeAsignaturas = JSON.parse(asignaturasJSON).map(asignaturaData =>
+                new Asignatura(
+                    asignaturaData.nombre,
+                    asignaturaData.calificaciones || [] // Asegurar que las calificaciones existan
+                )
+            );
+        }
+    }
+    
 
       /**
      * Carga las asignaturas desde el localStorage.
      */
-      cargarAsignaturas() {
-        try {
-            const asignaturasJSON = localStorage.getItem('asignaturas');
-            if (asignaturasJSON) {
-                this.listaDeAsignaturas = JSON.parse(asignaturasJSON).map(asignaturaData =>
-                    new Asignatura(asignaturaData.nombre)
-                );
-            }
-        } catch (error) {
-            console.error("Error al cargar las asignaturas desde localStorage:", error);
-        }
-    }
+      
 
     /**
      * Guarda las asignaturas en localStorage.
      */
     guardarEnLocalStorage() {
         try {
-            localStorage.setItem("asignaturas", JSON.stringify(this.listaDeAsignaturas));
+            if (!this.listaDeAsignaturas || this.listaDeAsignaturas.length === 0) {
+                console.warn("No hay asignaturas para guardar.");
+                return;
+            }
+    
+            localStorage.setItem("asignaturas", JSON.stringify(this.obtenerListaAsignaturas()));
+            console.log("Asignaturas guardadas en localStorage.");
         } catch (error) {
             console.error("Error al guardar las asignaturas en localStorage:", error);
         }
     }
+    
+    obtenerListaAsignaturas() {
+        return this.listaDeAsignaturas.map(asignatura => asignatura.toString()); // Se usa el toString() corregido
+    }
+    
 
     /**
      * Muestra las asignaturas en la página.
@@ -108,6 +120,7 @@ export class Asignaturas {
             // Validar si la asignatura ya existe en la lista
             if (!this.listaDeAsignaturas.some(a => a.nombre === asignatura.nombre)) {
                 this.listaDeAsignaturas.push(asignatura); // Agrega la asignatura si no existe
+                this.guardarEnLocalStorage();
                 console.log(`${asignatura.nombre} ha sido agregada.`);
             } else {
                 console.log(`${asignatura.nombre} ya está en la lista.`); // Mensaje de advertencia si ya existe
@@ -132,6 +145,7 @@ export class Asignaturas {
             // Si la longitud cambia, significa que la asignatura fue encontrada y eliminada
             if (nuevaLista.length !== this.listaDeAsignaturas.length) {
                 this.listaDeAsignaturas = nuevaLista; // Actualizamos la lista
+                this.guardarEnLocalStorage();
                 console.log(`${asignatura.nombre} ha sido quitada.`);
             } else {
                 console.warn(`${asignatura.nombre} no se encuentra en la lista.`); // Mensaje de advertencia si no existe
@@ -151,7 +165,7 @@ export class Asignaturas {
      */
     buscarPatronAsignatura(patron) {
         // Obtener el input del usuario
-    let patron = document.getElementById("inputPatronAsignatura").value.trim().toLowerCase();
+    patron = document.getElementById("inputPatronAsignatura").value.trim().toLowerCase();
     let resultadoAsignaturas = document.getElementById("resultadoAsignaturas");
 
     resultadoAsignaturas.innerHTML = ""; // Limpiar resultados anteriores

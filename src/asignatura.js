@@ -109,9 +109,23 @@ export class Asignatura {
         }
     }
 
- 
-
-
-
+    toString() {
+        try {
+            if (!this.#calificaciones) {
+                console.warn("No hay calificaciones registradas.");
+                return "Sin calificaciones";
+            }
+    
+            return {
+                nombre: this.#nombre,
+                notas: this.#calificaciones.join(", ") // Convierte las calificaciones en una cadena separada por comas
+            };
+        } catch (error) {
+            console.error("Error al generar la descripción de la asignatura:", error.message);
+            return "Información no disponible";
+        }
+    }
     
 }
+
+

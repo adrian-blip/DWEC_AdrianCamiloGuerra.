@@ -75,6 +75,18 @@ export class Estudiante extends Persona {
     }
 
     /**
+     * ## Setter: Asigna las asignaturas del estudiante.
+     * @param {Asignatura[]} valor - Lista de asignaturas.
+     */
+    set ponerAsignaturas(asignaturaData) {
+        this.#asignaturas = asignaturaData.map(asig => {
+            const nuevaAsignatura = new Asignatura(asig.nombre);
+            nuevaAsignatura.calificaciones = asig.notas.split(',').map(nota => parseFloat(nota.trim()));
+            return nuevaAsignatura;
+        });
+    }
+
+    /**
      * ## Método: Representación en cadena del estudiante.
      * 
      * Genera una descripción del estudiante, incluyendo su ID, nombre, edad, dirección y asignaturas matriculadas.

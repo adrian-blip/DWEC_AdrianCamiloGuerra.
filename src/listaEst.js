@@ -1,5 +1,6 @@
 import { Estudiante } from './estudiante.js';
 import { Asignaturas } from './asignaturas.js';
+import { Direccion } from './direccion.js';
 /**
 * # Clase listaEstudiante
 * 
@@ -14,20 +15,17 @@ export class listaEstudiante {
 
     cargarEstudiantes() {
         const estudiantesJSON = localStorage.getItem('estudiantes');
+        console.log(estudiantesJSON);
         if (estudiantesJSON) {
-            this.estudiantes = JSON.parse(estudiantesJSON).map(estudianteData =>
-                new Estudiante(
-                    estudianteData.id,
-                    estudianteData.nombre,
-                    estudianteData.edad,
-                    estudianteData.calle,
-                    estudianteData.numero,
-                    estudianteData.piso,
-                    estudianteData.codigoPostal,
-                    estudianteData.provincia,
-                    estudianteData.localidad
-                )
-            );
+            this.estudiantes = JSON.parse(estudiantesJSON).map(estData => {
+
+                const nuevaDireccion = new Direccion(estData.calle, estData.numero, estData.piso, estData.codigoPostal, estData.provincia, estData.localidad);
+
+                const nuevoEstudiante = new Estudiante(estData.id, estData.nombre, estData.edad, nuevaDireccion);
+
+                nuevoEstudiante.ponerAsignaturas = estData.asignaturas;
+                return nuevoEstudiante;
+            });
         }
     }
     

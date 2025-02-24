@@ -16,6 +16,8 @@
         <button onclick="cambiarSeccion('menu')">Inicio</button>
         <button onclick="cambiarSeccion('crearEstudiante')">Crear Estudiante</button>
         <button onclick="cambiarSeccion('crearAsignatura')">Crear Asignatura</button>
+        <button onclick="cambiarSeccion('eliminarEstudiante')">Eliminar Estudiante</button>
+        <button onclick="cambiarSeccion('eliminarAsignatura')">Eliminar Asignatura</button>
         <button onclick="cambiarSeccion('matricularEstudiante')">Matricular Estudiante</button>
         <button onclick="cambiarSeccion('desmatricularEstudiante')">Desmatricular Estudiante</button>
         <button onclick="cambiarSeccion('gestionarCalificaciones')">Gestionar Calificaciones</button>
@@ -59,6 +61,20 @@
         <h2>Crear Asignatura</h2>
         <input type="text" id="nombreAsignatura" placeholder="Nombre de la Asignatura" required
             pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+" title="Solo letras y espacios">
+        <button type="submit">Guardar</button>
+    </form>
+
+    <form id="eliminarAsignatura" class="seccion">
+        <h2>Eliminar Asignatura</h2>
+        <input type="text" id="nombreAsignatura" placeholder="Nombre de la Asignatura" required
+            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+" title="Solo letras y espacios">
+        <button type="submit">Guardar</button>
+    </form>
+
+    <form id="eliminarEstudiante" class="seccion">
+        <h2>Eliminar Estudiante</h2>
+        <input type="Number" id="nombreAsignatura" placeholder="Id Estudiante" required
+             title="Solo Numeros">
         <button type="submit">Guardar</button>
     </form>
 

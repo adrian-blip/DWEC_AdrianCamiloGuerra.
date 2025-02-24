@@ -28,6 +28,19 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Formulario de asignaturas enviado");
     });
 
+    // Evento para eliminar estudiante
+    document.getElementById("eliminarEstudiante").addEventListener("submit", function(event) {
+        event.preventDefault();
+        listaEstudiantes.eliminarEstudiante();
+    });
+
+    // Evento para crear asignatura
+    document.getElementById("crearAsignatura").addEventListener("submit", function(event) {
+        event.preventDefault();
+        listaAsignaturas.crearAsignatura();
+        console.log("Formulario de asignaturas enviado");
+    });
+
     // Evento para matricular estudiante
     document.getElementById("matricularEstudiante").addEventListener("submit", function(event) {
         event.preventDefault();

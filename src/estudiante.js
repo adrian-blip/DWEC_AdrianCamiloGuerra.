@@ -127,12 +127,14 @@ export class Estudiante extends Persona {
      matricular(...asignaturas) {
         try {
             asignaturas.forEach(asignatura => {
-                // Clonamos la asignatura para asegurarnos de que sea única por estudiante
-                let nuevaAsignatura = new Asignatura(asignatura.nombre); // Crea una nueva instancia de la asignatura
-                // Aquí también podemos copiar las calificaciones si es necesario
+                // Clonamos la asignatura asegurándonos de que tenga el mismo nombre
+                let nuevaAsignatura = new Asignatura(asignatura.nombre);
                 nuevaAsignatura.calificaciones = [...asignatura.calificaciones];
-                
-                if (!this.#asignaturas.includes(nuevaAsignatura)) {
+    
+                // Verificamos si la asignatura ya está matriculada por nombre
+                let existe = this.#asignaturas.some(a => a.nombre === nuevaAsignatura.nombre);
+    
+                if (!existe) {
                     this.#asignaturas.push(nuevaAsignatura);
                     console.log(`Asignatura "${nuevaAsignatura.nombre}" matriculada.`);
                 } else {
@@ -143,7 +145,7 @@ export class Estudiante extends Persona {
             console.error("Error al matricular asignaturas:", error.message);
         }
     }
-
+    
     /**
      * ## Método: Desmatricular asignaturas
      * 

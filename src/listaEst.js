@@ -1,6 +1,7 @@
 import { Estudiante } from './estudiante.js';
 import { Asignaturas } from './asignaturas.js';
 import { Direccion } from './direccion.js';
+
 /**
 * # Clase listaEstudiante
 * 
@@ -84,7 +85,7 @@ export class listaEstudiante {
         let direccion = new Direccion(calle, numero, piso, codigoPostal, provincia, localidad);
     
         // Crear objeto estudiante
-        let estudiante = new Estudiante(idN, nombre, edadN, direccion.toString());
+        let estudiante = new Estudiante(idN, nombre, edadN, direccion);
     
         // Agregar estudiante a la lista
         this.agregarEstudiante(estudiante);
@@ -124,7 +125,7 @@ export class listaEstudiante {
                             <td>${est.id}</td>
                             <td>${est.nombre}</td>
                             <td>${est.edad}</td>
-                            <td>${est.direccion}</td>
+                            <td>${est.direccion.toString()}</td>
                         </tr>`;
             tabla.innerHTML += fila;
         });
@@ -137,20 +138,39 @@ export class listaEstudiante {
      * 
      * @param {Estudiante} estudiante - Instancia de la clase Estudiante.
      */
-    eliminarEstudiante(estudiante) {
+    eliminarEstudiante() {
         try {
-            const index = this.estudiantes.findIndex(e => e.id === estudiante.id);
+            // Obtener el ID del estudiante desde el formulario
+            let idEstudiante = document.getElementById("eliminarEstudiante").value.trim();
+    
+            // Validar si se ingresó un ID
+            if (!idEstudiante) {
+                console.warn("Debe ingresar un ID de estudiante.");
+                return;
+            }
+    
+            // Buscar el índice del estudiante en la lista
+            const index = this.estudiantes.findIndex(e => e.id === idEstudiante);
+    
             if (index !== -1) {
-                this.estudiantes.splice(index, 1);
+                // Eliminar el estudiante de la lista
+                let estudianteEliminado = this.estudiantes.splice(index, 1)[0];
+    
+                // Guardar la lista actualizada en localStorage
                 this.guardarEnLocalStorage();
-                console.log(`Estudiante ${estudiante.nombre} eliminado.`);
+    
+                // Actualizar la interfaz
+                this.mostrarEstudiantes();
+    
+                console.log(`Estudiante ${estudianteEliminado.nombre} eliminado.`);
             } else {
-                console.error(`El estudiante ${estudiante.nombre} no existe.`);
+                console.warn(`No se encontró el estudiante con ID: ${idEstudiante}`);
             }
         } catch (error) {
-            console.error("Ocurrió un error al eliminar estudiante:", error.message);
+            console.error("Ocurrió un error al eliminar el estudiante:", error.message);
         }
     }
+    
 
     /**
  * Busca estudiantes por nombre y muestra los resultados que coinciden con el patrón.
@@ -163,7 +183,7 @@ export class listaEstudiante {
  * buscarEstudiantePorNombre("juan");
  * // Esto imprimirá todos los estudiantes cuyo nombre contenga "juan", sin importar mayúsculas o minúsculas.
  */
-    buscarEstudiantePorNombre(patron) {
+    buscarEstudiantePorNombre(patronx) {
         // Buscar estudiantes que coincidan con el patrón
         let patronx = document.getElementById("inputPatronEstudiante").value.trim().toLowerCase();
     let resultadoEstudiantes = document.getElementById("resultadoEstudiantes");
@@ -176,7 +196,7 @@ export class listaEstudiante {
     }
 
     let busqueda = this.estudiantes.filter(e => 
-        e.nombre.toLowerCase().includes(patron)
+        e.nombre.toLowerCase().includes(patronx)
     );
 
     if (busqueda.length > 0) {
@@ -246,12 +266,16 @@ verPromedioEstudiante() {
 eliminarEs() {
     let idEstudiante = prompt("Ingresa el ID del estudiante a eliminar:");
     let estudiante = this.estudiantes.find(e => e.id == idEstudiante);
-    if(estudiante) {
-        this.estudiantes.eliminarEstudiante(estudiante);
-        this.guardarEnLocalStorage()
+    if (estudiante) {
+        this.eliminarEstudiante(estudiante);
+        this.guardarEnLocalStorage();
+        this.mostrarEstudiantes();
+        console.log(`Estudiante con ID ${idEstudiante} eliminado.`);
+    } else {
+        console.error("Estudiante no encontrado.");
     }
-    
 }
+
 
  /**
      * ## Método: Generar reporte
@@ -421,43 +445,40 @@ listaDeAsignaturasXestudiante() {
  */
 
 
-matricularEstudiante() {
-    // Obtener valores del formulario
+   matricularEstudiante() {
+    // Obtener valores de los inputs
     let idEstudiante = document.getElementById("idEstudianteMatricular").value.trim();
-    let nombreAsignaturas = document.getElementById("nombreAsignaturaMatricular").value.trim().split(",");
+    let nombreAsignatura = document.getElementById("nombreAsignaturaMatricular").value.trim().split(",");
 
-    // Validaciones
-    if (!idEstudiante || !nombreAsignaturas.length) {
-        mostrarMensaje("Todos los campos son obligatorios.");
+    // Validar que los campos no estén vacíos
+    if (!idEstudiante || !nombreAsignatura.length) {
+        console.log("Todos los campos son obligatorios.");
         return;
     }
 
-    // Buscar estudiante por ID
-    let estudiante = this.estudiantes.find(e => e.id == idEstudiante);
+    // Buscar el estudiante en la lista
+    let estudiante = estudiantes.find(e => e.id == idEstudiante);
     
     if (estudiante) {
-        nombreAsignaturas.forEach(nombreAsignatura => {
-            nombreAsignatura = nombreAsignatura.trim();
-            let asignatura = this.asignaturas.find(a => a.nombre === nombreAsignatura);
-            
+        nombreAsignatura.forEach(nAsig => {
+            nAsig = nAsig.trim(); // Eliminar espacios extra
+            let asignatura = listaDeAsignaturas.find(a => a.nombre === nAsig);
+
             if (asignatura) {
                 estudiante.matricular(asignatura);
-                this.guardarEnLocalStorage();
+                console.log(`Estudiante ${estudiante.nombre} matriculado en ${asignatura.nombre}`);
             } else {
-                
-                mostrarMensaje("No encontramos la asignatura");
+                console.log(`Asignatura "${nAsig}" no encontrada.`);
             }
         });
+    } else {
+        console.log("Estudiante no encontrado.");
+    }
+}
+
 
         
         
-        // Mensaje de éxito y limpiar formulario
-        mostrarMensaje("Estudiante matriculado correctamente.");
-        document.getElementById("matricularEstudiante").reset();
-    } else {
-        mostrarMensaje("Estudiante no encontrado.");
-    }
-}
 
 /**
  * Desmatricula a un estudiante de una o varias asignaturas.

@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Evento para eliminar estudiante
     document.getElementById("eliminarEstudiante").addEventListener("submit", function(event) {
         event.preventDefault();
-        listaEstudiantes.eliminarEs();
+        listaEstudiantes.eliminarEstudiante();
     });
 
     document.getElementById("eliminarAsignatura").addEventListener("submit", function(event) {

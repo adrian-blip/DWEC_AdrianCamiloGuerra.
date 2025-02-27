@@ -141,7 +141,7 @@ export class listaEstudiante {
     eliminarEstudiante() {
         try {
             // Obtener el ID del estudiante desde el formulario
-            let idEstudiante = document.getElementById("eliminarEstudiante").value.trim();
+            let idEstudiante = document.getElementById("eliminarEstudianteId").value.trim();
     
             // Validar si se ingresó un ID
             if (!idEstudiante) {
@@ -150,7 +150,9 @@ export class listaEstudiante {
             }
     
             // Buscar el índice del estudiante en la lista
-            const index = this.estudiantes.findIndex(e => e.id === idEstudiante);
+            const index = this.estudiantes.findIndex(e => e.id === Number(idEstudiante));
+
+
     
             if (index !== -1) {
                 // Eliminar el estudiante de la lista

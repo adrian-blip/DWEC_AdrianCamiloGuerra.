@@ -185,7 +185,7 @@ export class listaEstudiante {
  */
     buscarEstudiantePorNombre(patronx) {
         // Buscar estudiantes que coincidan con el patrón
-        let patronx = document.getElementById("inputPatronEstudiante").value.trim().toLowerCase();
+         patronx = document.getElementById("inputPatronEstudiante").value.trim().toLowerCase();
     let resultadoEstudiantes = document.getElementById("resultadoEstudiantes");
 
     resultadoEstudiantes.innerHTML = ""; // Limpiar resultados anteriores

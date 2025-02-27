@@ -121,6 +121,7 @@ export class Asignaturas {
             if (!this.listaDeAsignaturas.some(a => a.nombre === asignatura.nombre)) {
                 this.listaDeAsignaturas.push(asignatura); // Agrega la asignatura si no existe
                 this.guardarEnLocalStorage();
+                
                 console.log(`${asignatura.nombre} ha sido agregada.`);
             } else {
                 console.log(`${asignatura.nombre} ya está en la lista.`); // Mensaje de advertencia si ya existe
@@ -137,23 +138,49 @@ export class Asignaturas {
      * 
      * @param {Asignatura} asignatura - La asignatura a quitar. Debe ser una instancia válida de la clase **Asignatura**.
      */
-    quitarAsignatura(asignatura) {
+    quitarAsignatura() {
         try {
-            // Filtrar la lista para excluir la asignatura que se desea quitar
-            const nuevaLista = this.listaDeAsignaturas.filter(a => a.nombre !== asignatura.nombre);
-
-            // Si la longitud cambia, significa que la asignatura fue encontrada y eliminada
-            if (nuevaLista.length !== this.listaDeAsignaturas.length) {
-                this.listaDeAsignaturas = nuevaLista; // Actualizamos la lista
-                this.guardarEnLocalStorage();
-                console.log(`${asignatura.nombre} ha sido quitada.`);
-            } else {
-                console.warn(`${asignatura.nombre} no se encuentra en la lista.`); // Mensaje de advertencia si no existe
+            // Obtener el nombre ingresado y eliminar espacios al principio y al final
+            let asigNombre = document.getElementById('nombreAsignatura').value.trim().toLowerCase();
+    
+            // Verificar si se ingresó un nombre
+            if (!asigNombre) {
+                console.warn("Debes ingresar un nombre de asignatura válido.");
+                return;
             }
+    
+            // Mostrar la lista completa para depurar
+            console.log("Lista de asignaturas:", this.listaDeAsignaturas);
+    
+            // Buscar la asignatura en la lista que tenga el nombre correspondiente
+            const asignatura = this.listaDeAsignaturas.find(a => 
+                a.nombre.trim().toLowerCase() === asigNombre
+            );
+    
+            // Si no se encuentra la asignatura, mostrar advertencia
+            if (!asignatura) {
+                console.warn(`${asigNombre} no se encuentra en la lista.`);
+                return;
+            }
+    
+            // Filtrar la lista para eliminar la asignatura encontrada
+            this.listaDeAsignaturas = this.listaDeAsignaturas.filter(a => 
+                a.nombre.trim().toLowerCase() !== asigNombre
+            );
+    
+            // Guardar cambios en localStorage
+            this.guardarEnLocalStorage();
+            
+            // Actualizar la vista
+            this.mostrarAsignaturas();
+    
+            console.log(`${asigNombre} ha sido quitada.`);
         } catch (error) {
-            console.error("Error al quitar asignatura:", error.message); // Manejo de errores
+            console.error("Error al quitar asignatura:", error.message);
         }
     }
+    
+    
 
 
     /**

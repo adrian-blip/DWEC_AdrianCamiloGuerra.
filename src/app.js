@@ -31,8 +31,15 @@ document.addEventListener("DOMContentLoaded", function() {
     // Evento para eliminar estudiante
     document.getElementById("eliminarEstudiante").addEventListener("submit", function(event) {
         event.preventDefault();
-        listaEstudiantes.eliminarEstudiante();
+        listaEstudiantes.eliminarEs();
     });
+
+    document.getElementById("eliminarAsignatura").addEventListener("submit", function(event) {
+        event.preventDefault();
+         
+        listaAsignaturas.quitarAsignatura(); // Pasa un objeto con la estructura esperada
+    });
+    
 
     // Evento para crear asignatura
     document.getElementById("crearAsignatura").addEventListener("submit", function(event) {
@@ -44,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Evento para matricular estudiante
     document.getElementById("matricularEstudiante").addEventListener("submit", function(event) {
         event.preventDefault();
+        console.log("Funciona el evento de matricular est.")
         listaEstudiantes.matricularEstudiante();
     });
 

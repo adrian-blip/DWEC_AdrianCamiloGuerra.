@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Estudiantes</title>
     <link rel="stylesheet" href="./css/style.css">
-    <script type="module" src="./src/script.js"></script>
+    
     <script type="module" src="./src/app.js"></script>
     <script src="./js/index.js"></script>
 </head>
@@ -73,7 +73,7 @@
 
     <form id="eliminarEstudiante" class="seccion">
         <h2>Eliminar Estudiante</h2>
-        <input type="Number" id="nombreAsignatura" placeholder="Id Estudiante" required
+        <input type="number" id="eliminarEstudianteId" placeholder="Id Estudiante" required
              title="Solo Numeros">
         <button type="submit">Guardar</button>
     </form>
@@ -143,11 +143,13 @@
 
     <div id="listaEstudiantes"></div>
 
-
+    <h2>Reporte de estudiantes</h2>
     <div id="reporteEstudiantes"></div>
 
+    <h2>Asignaturas por estudiantes</h2>
     <div id="asignaturasPorEstudiante"></div>
 
+    <h2>Tabla de calificacion</h2>
     <div id="tablaCalificaciones"></div>
 
     <p id="promedioGeneral">Promedio General: --</p>

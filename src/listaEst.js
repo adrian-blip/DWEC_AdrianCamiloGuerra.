@@ -455,6 +455,8 @@ listaDeAsignaturasXestudiante() {
             if (asignatura) {
                 estudiante.matricular(asignatura);
                 console.log(`Estudiante ${estudiante.nombre} matriculado en ${asignatura.nombre}`);
+                this.guardarEnLocalStorage();
+                
             } else {
                 console.log(`Asignatura "${nAsig}" no encontrada.`);
             }
@@ -521,7 +523,7 @@ desmatricularEstudiante() {
         // Obtener valores del formulario
         let idEstudiante = document.getElementById("idEstudianteCalificacion").value.trim();
         let nombreAsignatura = document.getElementById("nombreAsignaturaCalificacion").value.trim();
-        let calificacionesInput = document.getElementById("calificaciones").value.trim().split(",");
+        let calificacionesInput = document.getElementById("calificacion").value.trim().split(",");
     
         // Validaciones básicas
         if (!idEstudiante || !nombreAsignatura || !calificacionesInput.length) {
@@ -554,7 +556,7 @@ desmatricularEstudiante() {
                     this.guardarEnLocalStorage();
     
                     mostrarMensaje(`Calificaciones agregadas correctamente a ${nombreAsignatura} del estudiante ${estudiante.nombre}.`);
-                    document.getElementById("formAgregarCalificaciones").reset();
+                    document.getElementById("gestionarCalificaciones").reset();
                 } else {
                     mostrarMensaje("No se agregaron calificaciones válidas.");
                 }

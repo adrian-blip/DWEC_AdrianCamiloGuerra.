@@ -261,22 +261,6 @@ verPromedioEstudiante() {
     }
     
 }
-/**
- * Elimina un estudiante basado en su ID.
- * @function
- */
-eliminarEs() {
-    let idEstudiante = prompt("Ingresa el ID del estudiante a eliminar:");
-    let estudiante = this.estudiantes.find(e => e.id == idEstudiante);
-    if (estudiante) {
-        this.eliminarEstudiante(estudiante);
-        this.guardarEnLocalStorage();
-        this.mostrarEstudiantes();
-        console.log(`Estudiante con ID ${idEstudiante} eliminado.`);
-    } else {
-        console.error("Estudiante no encontrado.");
-    }
-}
 
 
  /**
@@ -459,12 +443,14 @@ listaDeAsignaturasXestudiante() {
     }
 
     // Buscar el estudiante en la lista
-    let estudiante = estudiantes.find(e => e.id == idEstudiante);
+    let estudiante = this.estudiantes.find(e => e.id == idEstudiante);
+
     
     if (estudiante) {
         nombreAsignatura.forEach(nAsig => {
             nAsig = nAsig.trim(); // Eliminar espacios extra
-            let asignatura = listaDeAsignaturas.find(a => a.nombre === nAsig);
+            let asig = new Asignaturas()
+            let asignatura = asig.listaDeAsignaturas.find(a => a.nombre === nAsig);
 
             if (asignatura) {
                 estudiante.matricular(asignatura);

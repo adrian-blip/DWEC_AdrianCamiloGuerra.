@@ -72,12 +72,16 @@ document.addEventListener("DOMContentLoaded", function() {
         listaEstudiantes.verPromedioEstudiante();
     });
 
-    // Evento para buscar asignatura por patrón
-    document.getElementById("buscarPatronAsignatura").addEventListener("submit", function(event) {
-        event.preventDefault();
+    document.getElementById("modalAsigBusq").addEventListener("submit", function(event) {
+        event.preventDefault(); 
         listaAsignaturas.buscarPatronAsignatura();
     });
+    
 
+    document.getElementById("modalEstBus").addEventListener("submit", function(event) {
+        event.preventDefault(); 
+        listaEstudiantes.buscarEstudiantePorNombre();
+    });
 
     document.getElementById("verListaEstudiantes").addEventListener("click", function(event) {
         event.preventDefault();

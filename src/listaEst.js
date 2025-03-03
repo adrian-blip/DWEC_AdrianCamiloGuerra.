@@ -204,6 +204,9 @@ export class listaEstudiante {
                 <strong>Estudiantes encontrados:</strong>
                 <ul>${busqueda.map(e => `<li>${e.nombre} (ID: ${e.id})</li>`).join("")}</ul>
             `;
+
+            console.log("Estudiantes encontrados:\n" + busqueda.map(e => `${e.nombre} (ID: ${e.id})`).join("\n"));
+
         } else {
             resultadoEstudiantes.innerHTML = "<p>No se encontraron estudiantes con ese nombre.</p>";
         }

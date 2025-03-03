@@ -23,18 +23,20 @@
         <button onclick="cambiarSeccion('gestionarCalificaciones')">Gestionar Calificaciones</button>
         <div class="btn" onclick="mostrarPopup()">Abrir Reportes</div>
 
+        <!-- Popup de Reportes -->
         <form id="popupReportes" class="popup">
             <h2>Reportes</h2>
-            <button type="submit" onclick="abrirModal('modalPromedio')">Ver Promedio por Estudiante</button>
-            <button type="submit" onclick="abrirModal('modalAsigBusq')">Buscar Asignaturas</button>
-            <button type="submit" onclick="abrirModal('modalEstBus')">Buscar Estudiantes</button>
-            <button type="submit" id="verListaEstudiantes" onclick="verListaEstudiantes()">Ver Lista de Estudiantes</button>
-            <button type="submit" id="verReporteEstudiantes" onclick="verReporteEstudiantes()">Ver Reporte de Estudiantes</button>
-            <button type="submit" id="listaDeAsignaturasPorestudiante" onclick="listaDeAsignaturasPorestudiante()">Lista de Asignaturas por Estudiante</button>
-            <button type="submit" id="calificacionesYpromedioAsignatura" onclick="calificacionesYpromedioAsignatura()">Calificaciones y Promedio por Asignatura</button>
-            <button type="submit" id="PromedioGeneral" onclick="PromedioGeneral()">Promedio General</button>
-            <button onclick="cerrarPopup()">Cerrar</button>
+            <button type="button" onclick="abrirModal('modalPromedio')">Ver Promedio por Estudiante</button>
+            <button type="button" onclick="abrirModal('modalAsigBusq')">Buscar Asignaturas</button>
+            <button type="button" onclick="abrirModal('modalEstBus')">Buscar Estudiantes</button>
+            <button type="button" id="verListaEstudiantes" onclick="verListaEstudiantes()">Ver Lista de Estudiantes</button>
+            <button type="button" id="verReporteEstudiantes" onclick="verReporteEstudiantes()">Ver Reporte de Estudiantes</button>
+            <button type="button" id="listaDeAsignaturasPorestudiante" onclick="listaDeAsignaturasPorestudiante()">Lista de Asignaturas por Estudiante</button>
+            <button type="button" id="calificacionesYpromedioAsignatura" onclick="calificacionesYpromedioAsignatura()">Calificaciones y Promedio por Asignatura</button>
+            <button type="button" id="PromedioGeneral" onclick="PromedioGeneral()">Promedio General</button>
+            <button type="button" onclick="cerrarPopup()">Cerrar</button>
         </form>
+
 
         <!-- Botón para abrir el popup -->
 
@@ -110,10 +112,11 @@
             <span class="cerrar" onclick="cerrarModal('modalPromedio')">&times;</span>
             <h3>Ver Promedio de un Estudiante</h3>
             <input type="number" id="idEstudiantePromedio" placeholder="ID del Estudiante">
-            <button type="submit">Promedio</button>
+            <button type="submit" id="btnPromedio">Promedio</button>
             <p id="resultadoPromedio"></p>
         </div>
     </form>
+
 
     <form id="modalAsigBusq" class="modal">
         <div class="modal-contenido">
@@ -142,6 +145,8 @@
     <ul id="listaAsignaturas"></ul>
 
     <div id="listaEstudiantes"></div>
+
+    <div id="resultadoPromedio"></div>
 
     <h2>Reporte de estudiantes</h2>
     <div id="reporteEstudiantes"></div>

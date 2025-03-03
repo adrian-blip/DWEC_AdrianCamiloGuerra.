@@ -79,27 +79,27 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    document.getElementById("verListaEstudiantes").addEventListener("submit", function(event) {
+    document.getElementById("verListaEstudiantes").addEventListener("click", function(event) {
         event.preventDefault();
         listaEstudiantes.listarEstudiante();
     });
 
-    document.getElementById("verReporteEstudiantes").addEventListener("submit", function(event) {
+    document.getElementById("verReporteEstudiantes").addEventListener("click", function(event) {
         event.preventDefault();
         listaEstudiantes.generarReporte();
     });
 
-    document.getElementById("listaDeAsignaturasPorestudiante").addEventListener("submit", function(event) {
+    document.getElementById("listaDeAsignaturasPorestudiante").addEventListener("click", function(event) {
         event.preventDefault();
         listaEstudiantes.listaDeAsignaturasXestudiante();
     });
 
-    document.getElementById("calificacionesYpromedioAsignatura").addEventListener("submit", function(event) {
+    document.getElementById("calificacionesYpromedioAsignatura").addEventListener("click", function(event) {
         event.preventDefault();
         listaEstudiantes.calificacionesYpromedioAsig();
     });
 
-    document.getElementById("PromedioGeneral").addEventListener("submit", function(event) {
+    document.getElementById("PromedioGeneral").addEventListener("click", function(event) {
         event.preventDefault();
         listaEstudiantes.calcularPromedioGeneral();
     });

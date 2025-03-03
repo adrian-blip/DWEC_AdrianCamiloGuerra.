@@ -1,52 +1,80 @@
 // Mostrar el popup de reportes
 function mostrarPopup() {
     document.getElementById("popupReportes").style.display = "block";
-    
 }
 
 // Ocultar el popup
 function cerrarPopup() {
     document.getElementById("popupReportes").style.display = "none";
 }
-// Función para abrir el modal
+
+// Función para abrir el modal sin recargar la página
 function abrirModal(id) {
-    event.preventDefault(); // Evita que el formulario se envíe y recargue la página
-    document.getElementById(id).style.display = "block";
+    let modal = document.getElementById(id);
+    if (modal) {
+        modal.style.display = "block";
+    }
 }
 
 // Función para cerrar el modal
 function cerrarModal(id) {
-    document.getElementById(id).style.display = "none";
-}
-
-function cerrarModal() {
-    document.querySelector(".modal").remove();
+    let modal = document.getElementById(id);
+    if (modal) {
+        modal.style.display = "none";
+    }
 }
 
 function cambiarSeccion(seccionId) {
+    // Oculta todas las secciones
     document.querySelectorAll(".seccion").forEach(seccion => {
         seccion.style.display = "none";
     });
-    document.getElementById(seccionId).style.display = "block";
+
+    // Muestra la sección seleccionada
+    const seccionMostrar = document.getElementById(seccionId);
+    if (seccionMostrar) {
+        seccionMostrar.style.display = "block";
+    } else {
+        console.error(`Sección con ID '${seccionId}' no encontrada.`);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+    // Asegurar que la primera sección visible sea 'menu'
     cambiarSeccion('menu');
 });
 
-function mostrarMensaje(mensaje) {
-    const modal = document.createElement("div");
-    modal.classList.add("modal");
-    modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close-button" onclick="cerrarModal()">&times;</span>
-            <p>${mensaje}</p>
-        </div>
-    `;
-    document.body.appendChild(modal);
-    modal.style.display = "block";
-}
+
+// Evitar la recarga de formularios y mantener los resultados visibles
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("form").forEach(form => {
+        form.addEventListener("submit", function (event) {
+            event.preventDefault(); // Evita la recarga
+
+            // Verifica si el formulario está dentro de un modal
+            let modal = form.closest(".modal");
+            if (modal) {
+                // No cerramos el modal automáticamente, el usuario lo hará con la "X"
+                console.log(`Formulario ${form.id} procesado sin cerrar el modal.`);
+            }
+        });
+    });
+
+    // Mostrar la sección de inicio por defecto
+    cambiarSeccion('menu');
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Evita la recarga del formulario dentro de la modal
+    document.getElementById("modalPromedio").addEventListener("submit", function (event) {
+        event.preventDefault(); // Detiene la recarga
+
+    });
+});
+
+
+
 
 // Validacion mixta
 

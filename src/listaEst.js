@@ -256,6 +256,7 @@ verPromedioEstudiante() {
     
     if (estudiante) {
         resultadoPromedio.innerHTML = `El promedio de ${estudiante.nombre} es: ${estudiante.calcularPromedio()}`;
+        this.guardarEnLocalStorage();
     } else {
         resultadoPromedio.innerHTML = "Estudiante no encontrado.";
     }

@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("eliminarAsignatura").addEventListener("submit", function(event) {
         event.preventDefault();
          
-        listaAsignaturas.quitarAsignatura(); // Pasa un objeto con la estructura esperada
+        listaAsignaturas.quitarAsignatura(); 
     });
     
 

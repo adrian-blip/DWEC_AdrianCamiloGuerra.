@@ -38,17 +38,8 @@ export class Asignaturas {
      * Guarda las asignaturas en localStorage.
      */
     guardarEnLocalStorage() {
-        try {
-            if (!this.listaDeAsignaturas || this.listaDeAsignaturas.length === 0) {
-                console.warn("No hay asignaturas para guardar.");
-                return;
-            }
-    
-            localStorage.setItem("asignaturas", JSON.stringify(this.obtenerListaAsignaturas()));
-            console.log("Asignaturas guardadas en localStorage.");
-        } catch (error) {
-            console.error("Error al guardar las asignaturas en localStorage:", error);
-        }
+          localStorage.setItem("asignaturas", JSON.stringify(this.obtenerListaAsignaturas()));
+            
     }
     
     obtenerListaAsignaturas() {
@@ -140,45 +131,29 @@ export class Asignaturas {
      */
     quitarAsignatura() {
         try {
-            // Obtener el nombre ingresado y eliminar espacios al principio y al final
-            let asigNombre = document.getElementById('nombreAsignatura').value.trim().toLowerCase();
+            let input = document.getElementById('nombreAsignaturaE');
+            if (!input) return;  // Si el input no existe, salimos
     
-            // Verificar si se ingresó un nombre
-            if (!asigNombre) {
-                console.warn("Debes ingresar un nombre de asignatura válido.");
-                return;
+            let asigNombre = input.value.trim().toLowerCase();
+            if (!asigNombre) return; // Si el usuario no ingresó nada, salimos
+    
+            // Buscar la asignatura en la lista
+            const asignaturaIndex = this.listaDeAsignaturas.findIndex(a => a.nombre.trim().toLowerCase() === asigNombre);
+    
+            if (asignaturaIndex !== -1) {
+                this.listaDeAsignaturas.splice(asignaturaIndex, 1); // Eliminar la asignatura
+                this.guardarEnLocalStorage(); // Guardar en localStorage usando tu función existente
+                this.mostrarAsignaturas(); // Refrescar la lista en pantalla
+    
             }
-    
-            // Mostrar la lista completa para depurar
-            console.log("Lista de asignaturas:", this.listaDeAsignaturas);
-    
-            // Buscar la asignatura en la lista que tenga el nombre correspondiente
-            const asignatura = this.listaDeAsignaturas.find(a => 
-                a.nombre.trim().toLowerCase() === asigNombre
-            );
-    
-            // Si no se encuentra la asignatura, mostrar advertencia
-            if (!asignatura) {
-                console.warn(`${asigNombre} no se encuentra en la lista.`);
-                return;
-            }
-    
-            // Filtrar la lista para eliminar la asignatura encontrada
-            this.listaDeAsignaturas = this.listaDeAsignaturas.filter(a => 
-                a.nombre.trim().toLowerCase() !== asigNombre
-            );
-    
-            // Guardar cambios en localStorage
-            this.guardarEnLocalStorage();
-            
-            // Actualizar la vista
-            this.mostrarAsignaturas();
-    
-            console.log(`${asigNombre} ha sido quitada.`);
         } catch (error) {
             console.error("Error al quitar asignatura:", error.message);
         }
     }
+    
+    
+    
+    
     
     
 
@@ -190,33 +165,41 @@ export class Asignaturas {
      * 
      * @param {string} patron - Patrón de búsqueda.
      */
-    buscarPatronAsignatura(patron) {
+    buscarPatronAsignatura() {
         // Obtener el input del usuario
-    patron = document.getElementById("inputPatronAsignatura").value.trim().toLowerCase();
-    let resultadoAsignaturas = document.getElementById("resultadoAsignaturas");
-
-    resultadoAsignaturas.innerHTML = ""; // Limpiar resultados anteriores
-
-    if (!patron) {
-        resultadoAsignaturas.innerHTML = "<p>Por favor, ingresa un patrón de búsqueda.</p>";
-        return;
-    }
-
-    let resultados = this.listaDeAsignaturas.filter(asig => 
-        asig.nombre.toLowerCase().includes(patron)
-    );
-
-    if (resultados.length > 0) {
-        resultadoAsignaturas.innerHTML = "<strong>Asignaturas encontradas:</strong><ul>";
-        resultados.forEach(asignatura => {
-            resultadoAsignaturas.innerHTML += `<li>${asignatura.nombre}</li>`;
-        });
-        resultadoAsignaturas.innerHTML += "</ul>";
-    } else {
-        resultadoAsignaturas.innerHTML = "<p>No se encontraron asignaturas con ese patrón.</p>";
-    }
-
+        let patron = document.getElementById("inputPatronAsignatura").value.trim().toLowerCase();
+        let resultadoAsignaturas = document.getElementById("resultadoAsignaturas");
     
-}
+        resultadoAsignaturas.innerHTML = ""; // Limpiar resultados anteriores
+    
+        if (!patron) {
+            resultadoAsignaturas.innerHTML = "<p>Por favor, ingresa un patrón de búsqueda.</p>";
+            return;
+        }
+    
+        console.log("Patrón ingresado:", patron);
+        console.log("Lista actual de asignaturas:", this.listaDeAsignaturas);
+    
+        if (!Array.isArray(this.listaDeAsignaturas) || this.listaDeAsignaturas.length === 0) {
+            resultadoAsignaturas.innerHTML = "<p>No hay asignaturas registradas.</p>";
+            return;
+        }
+    
+        let resultados = this.listaDeAsignaturas.filter(asig => 
+            asig.nombre && asig.nombre.toLowerCase().includes(patron)
+        );
+    
+        if (resultados.length > 0) {
+            resultadoAsignaturas.innerHTML = "<strong>Asignaturas encontradas:</strong><ul>";
+            resultados.forEach(asignatura => {
+                resultadoAsignaturas.innerHTML += `<li>${asignatura.nombre}</li>`;
+                console.log("Asignatura encontrada:", asignatura.nombre);
+            });
+            resultadoAsignaturas.innerHTML += "</ul>";
+        } else {
+            resultadoAsignaturas.innerHTML = "<p>No se encontraron asignaturas con ese patrón.</p>";
+        }
+    }
+    
 
 }

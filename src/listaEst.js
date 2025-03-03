@@ -185,34 +185,35 @@ export class listaEstudiante {
  * buscarEstudiantePorNombre("juan");
  * // Esto imprimirá todos los estudiantes cuyo nombre contenga "juan", sin importar mayúsculas o minúsculas.
  */
-    buscarEstudiantePorNombre(patronx) {
-        // Buscar estudiantes que coincidan con el patrón
-         patronx = document.getElementById("inputPatronEstudiante").value.trim().toLowerCase();
-    let resultadoEstudiantes = document.getElementById("resultadoEstudiantes");
-
-    resultadoEstudiantes.innerHTML = ""; // Limpiar resultados anteriores
-
-    if (!patronx) {
-        resultadoEstudiantes.innerHTML = "<p>Por favor, ingresa un nombre o parte de él.</p>";
-        return;
+    buscarEstudiantePorNombre() {
+        let input = document.getElementById("inputPatronEstudiante").value.trim().toLowerCase();
+        let resultadoEstudiantes = document.getElementById("resultadoEstudiantes");
+    
+        resultadoEstudiantes.innerHTML = ""; // Limpiar resultados anteriores
+    
+        if (!input) {
+            resultadoEstudiantes.innerHTML = "<p>Por favor, ingresa un nombre o parte de él.</p>";
+            return;
+        }
+    
+        // Filtrar estudiantes por nombre
+        let busqueda = this.estudiantes.filter(e => e.nombre.toLowerCase().includes(input));
+    
+        if (busqueda.length > 0) {
+            resultadoEstudiantes.innerHTML = `
+                <strong>Estudiantes encontrados:</strong>
+                <ul>${busqueda.map(e => `<li>${e.nombre} (ID: ${e.id})</li>`).join("")}</ul>
+            `;
+        } else {
+            resultadoEstudiantes.innerHTML = "<p>No se encontraron estudiantes con ese nombre.</p>";
+        }
+    
+        // Asegurar que el modal se abra
+        abrirModal("modalEstBus");
     }
-
-    let busqueda = this.estudiantes.filter(e => 
-        e.nombre.toLowerCase().includes(patronx)
-    );
-
-    if (busqueda.length > 0) {
-        resultadoEstudiantes.innerHTML = "<strong>Estudiantes encontrados:</strong><ul>";
-        busqueda.forEach(e => {
-            resultadoEstudiantes.innerHTML += `<li>${e.nombre} (ID: ${e.id})</li>`;
-        });
-        resultadoEstudiantes.innerHTML += "</ul>";
-    } else {
-        resultadoEstudiantes.innerHTML = "<p>No se encontraron estudiantes con ese nombre.</p>";
-    }
-
-    abrirModal("modalEstBus");
-    }
+    
+    
+    
 
     calcularPromedioGeneral() {
         if (this.estudiantes.length === 0) {

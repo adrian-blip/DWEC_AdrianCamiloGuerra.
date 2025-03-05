@@ -11,7 +11,7 @@ export class listaEstudiante {
     constructor() {
         this.estudiantes = []; // Lista de objetos Estudiante
         this.cargarEstudiantes(); // Cargar datos al iniciar
-        this.mostrarEstudiantes();
+        this.listarEstudiante();
     }
 
     cargarEstudiantes() {
@@ -112,24 +112,7 @@ export class listaEstudiante {
         return this.estudiantes.map(estudiante => estudiante.toString());
     }
 
-    /**
-     * Muestra los estudiantes en la página.
-     */
-    mostrarEstudiantes() {
-        let tabla = document.getElementById("listaEstudiantes");
-        tabla.innerHTML = ""; // Limpiar la tabla antes de mostrar nuevos datos
-
-        this.estudiantes.forEach(est => {
-            console.log(est.direccion);
-            let fila = `<tr>
-                            <td>${est.id}</td>
-                            <td>${est.nombre}</td>
-                            <td>${est.edad}</td>
-                            <td>${est.direccion.toString()}</td>
-                        </tr>`;
-            tabla.innerHTML += fila;
-        });
-    }
+    
     
     /**
      * ## Método: Eliminar estudiante

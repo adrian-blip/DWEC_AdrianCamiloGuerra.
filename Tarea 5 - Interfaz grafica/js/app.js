@@ -1,8 +1,8 @@
 import { Asignatura } from '../../src/asignatura.js';
 import { Direccion } from '../../src/direccion.js';
 import { Estudiante } from '../../src/estudiante.js';
-import { listaEstudiante } from '../../src/listaEst.js';  
-import { Asignaturas } from '../../src/asignaturas.js';
+import { listaEstudiante } from '../src/listaEst.js';  
+import { Asignaturas } from '../src/asignaturas';
 
 
 

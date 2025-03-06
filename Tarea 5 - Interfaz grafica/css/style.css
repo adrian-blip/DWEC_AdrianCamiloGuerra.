@@ -92,11 +92,19 @@ form {
 input, button {
     display: block;
     width: 90%;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     padding: 10px;
     border-radius: 5px;
     margin: 0 auto;
     border: 1px solid #ddd;
+}
+label{
+    display: block;
+    width: 90%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 auto;
 }
 
 button {

@@ -1,6 +1,7 @@
 // Import de la libreria JQuery
 
-import $ from 'jquery';
+
+
 
 
 

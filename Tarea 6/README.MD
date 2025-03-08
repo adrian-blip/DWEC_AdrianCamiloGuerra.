@@ -183,8 +183,8 @@ import $ from 'jquery';
 ```json
 "scripts": {
     "vigilar:css": "npx tailwindcss -i ./src/css/entrada.css -o ./src/css/salida.css --watch",
-    "parcel:des": "parcel serve ./src/html/jquery.html --dist-dir compilado/desarrollo",
-    "parcel:prod": "parcel build ./src/html/jquery.html --dist-dir compilado/produccion"
+    "parcel:des": "parcel serve ./src/index.html --dist-dir compilado/desarrollo",
+    "parcel:prod": "parcel build ./src/index.html --dist-dir compilado/produccion"
 }
 ```
 

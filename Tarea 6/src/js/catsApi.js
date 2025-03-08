@@ -6,12 +6,12 @@ loader.innerText = "Cargando más gatos...";
 document.body.appendChild(loader);
 
 let loading = false;
-let page = 1; // Página inicial
+let page = 1;
 
 async function loadCats() {
     if (loading) return;
     loading = true;
-    loader.style.display = "block"; // Muestra el loader
+    loader.style.display = "block";
 
     try {
         const response = await fetch(`https://api.thecatapi.com/v1/breeds?limit=9&page=${page}`, {
@@ -45,21 +45,28 @@ async function loadCats() {
             content.appendChild(card);
         });
 
-        page++; // Aumenta la página para la próxima carga
+        page++;
 
     } catch (error) {
         console.error("Error cargando imágenes:", error);
     } finally {
         loading = false;
-        loader.style.display = "none"; // Oculta el loader
+        loader.style.display = "none";
+
+        // Verifica si el contenido cargado es menor que la altura de la ventana y carga más si es necesario
+        if (document.body.scrollHeight <= window.innerHeight) {
+            loadCats();
+        }
     }
 }
 
 // Detecta cuando el usuario está cerca del final de la página
 window.addEventListener("scroll", () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 400) {
-        loadCats(); // Cargar más gatos cuando esté cerca del final
+        loadCats();
     }
 });
 
+// Cargar gatos al inicio y verificar si es suficiente
 document.addEventListener("DOMContentLoaded", loadCats);
+

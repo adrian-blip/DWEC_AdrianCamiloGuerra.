@@ -1,9 +1,5 @@
-// Import de la libreria JQuery
-
-
-
-
-
+// Import de la librería jQuery
+import $ from 'jquery';
 
 $(document).ready(function () {
     const API_KEY = "live_zF2OlioZa0BXR5MNRxgahI56dSsXJmWUc5MwsAlh5sKCyBTIw1rE1YNyEdrgjZ0v";
@@ -54,15 +50,22 @@ $(document).ready(function () {
             complete: function () {
                 loading = false;
                 $loader.hide();
+
+                // Si el contenido sigue sin llenar la pantalla, cargar más gatos
+                if ($(document).height() <= $(window).height()) {
+                    loadCats();
+                }
             }
         });
     }
 
+    // Evento de scroll para carga infinita
     $(window).scroll(function () {
         if ($(window).scrollTop() + $(window).height() >= $(document).height() - 400) {
             loadCats();
         }
     });
 
+    // Primera carga y verificación de altura
     loadCats();
 });
